@@ -7,16 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37E02A8CA8DC8705C128E365 /* SameBoyEmulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9045303ABC112AC5035F7 /* SameBoyEmulator.swift */; };
+		671BE8249D6673AF28E8B30B /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1964EC2638778DCA24B70A0 /* GameView.swift */; };
 		845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */; };
+		E7452DCA0A3675993E647FFE /* EmulatorCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20171E61B9ED169F56792B98 /* EmulatorCore.swift */; };
 		FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		20171E61B9ED169F56792B98 /* EmulatorCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorCore.swift; sourceTree = "<group>"; };
+		45E9045303ABC112AC5035F7 /* SameBoyEmulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SameBoyEmulator.swift; sourceTree = "<group>"; };
 		7E6B69F736882F928812EAEA /* CrystalBoy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrystalBoy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FE12140C4D9CC1EA0330581 /* SameBoyBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SameBoyBridge.h; sourceTree = "<group>"; };
 		9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SameBoyBridge.c; sourceTree = "<group>"; };
 		A689816221F264BD33821B40 /* CrystalBoy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CrystalBoy-Bridging-Header.h"; sourceTree = "<group>"; };
 		B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalBoyApp.swift; sourceTree = "<group>"; };
+		E1964EC2638778DCA24B70A0 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -37,6 +43,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2E63C39BF02D81FA80EE03DF /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				E1964EC2638778DCA24B70A0 /* GameView.swift */,
+			);
+			path = Rendering;
+			sourceTree = "<group>";
+		};
+		2F92F44BF2DA0A21E5570B51 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				20171E61B9ED169F56792B98 /* EmulatorCore.swift */,
+				45E9045303ABC112AC5035F7 /* SameBoyEmulator.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		326D09C51EB6C370B228447E /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
@@ -51,6 +74,8 @@
 			children = (
 				A689816221F264BD33821B40 /* CrystalBoy-Bridging-Header.h */,
 				B4E1AF096D5785CD37B7DB26 /* App */,
+				2F92F44BF2DA0A21E5570B51 /* Core */,
+				2E63C39BF02D81FA80EE03DF /* Rendering */,
 			);
 			path = CrystalBoy;
 			sourceTree = "<group>";
@@ -119,7 +144,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */,
+				E7452DCA0A3675993E647FFE /* EmulatorCore.swift in Sources */,
+				671BE8249D6673AF28E8B30B /* GameView.swift in Sources */,
 				FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */,
+				37E02A8CA8DC8705C128E365 /* SameBoyEmulator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
