@@ -15,8 +15,8 @@ protocol EmulatorCore: AnyObject {
 
     func setInput(button: GameButton, pressed: Bool)
 
-    func setVideoCallback(_ callback: @escaping @Sendable (UnsafePointer<UInt32>) -> Void)
-    func setAudioCallback(_ callback: @escaping @Sendable (Int16, Int16) -> Void)
+    func setVideoCallback(_ callback: @escaping (UnsafePointer<UInt32>) -> Void)
+    func setAudioCallback(_ callback: @escaping (Int16, Int16) -> Void)
     func setSampleRate(_ rate: UInt32)
 
     func saveBattery(to url: URL) -> Bool

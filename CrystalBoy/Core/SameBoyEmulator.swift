@@ -2,8 +2,8 @@ import Foundation
 
 final class SameBoyEmulator: EmulatorCore {
     private var context: OpaquePointer?
-    private var videoCallback: (@Sendable (UnsafePointer<UInt32>) -> Void)?
-    private var audioCallback: (@Sendable (Int16, Int16) -> Void)?
+    private var videoCallback: ((UnsafePointer<UInt32>) -> Void)?
+    private var audioCallback: ((Int16, Int16) -> Void)?
 
     var screenWidth: Int {
         guard let ctx = context else { return 160 }
@@ -72,11 +72,11 @@ final class SameBoyEmulator: EmulatorCore {
         sb_set_key(ctx, Int32(button.rawValue), pressed)
     }
 
-    func setVideoCallback(_ callback: @escaping @Sendable (UnsafePointer<UInt32>) -> Void) {
+    func setVideoCallback(_ callback: @escaping (UnsafePointer<UInt32>) -> Void) {
         videoCallback = callback
     }
 
-    func setAudioCallback(_ callback: @escaping @Sendable (Int16, Int16) -> Void) {
+    func setAudioCallback(_ callback: @escaping (Int16, Int16) -> Void) {
         audioCallback = callback
     }
 

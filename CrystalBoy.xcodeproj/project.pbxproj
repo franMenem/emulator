@@ -11,6 +11,7 @@
 		671BE8249D6673AF28E8B30B /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1964EC2638778DCA24B70A0 /* GameView.swift */; };
 		845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */; };
 		E7452DCA0A3675993E647FFE /* EmulatorCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20171E61B9ED169F56792B98 /* EmulatorCore.swift */; };
+		E7EE6FA968DE776B28C2D8CE /* EmulationThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66F5A27EF6E1638BA203EAF /* EmulationThread.swift */; };
 		FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include"; }; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,7 @@
 		A689816221F264BD33821B40 /* CrystalBoy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CrystalBoy-Bridging-Header.h"; sourceTree = "<group>"; };
 		B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalBoyApp.swift; sourceTree = "<group>"; };
 		E1964EC2638778DCA24B70A0 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		E66F5A27EF6E1638BA203EAF /* EmulationThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulationThread.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -54,6 +56,7 @@
 		2F92F44BF2DA0A21E5570B51 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				E66F5A27EF6E1638BA203EAF /* EmulationThread.swift */,
 				20171E61B9ED169F56792B98 /* EmulatorCore.swift */,
 				45E9045303ABC112AC5035F7 /* SameBoyEmulator.swift */,
 			);
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */,
+				E7EE6FA968DE776B28C2D8CE /* EmulationThread.swift in Sources */,
 				E7452DCA0A3675993E647FFE /* EmulatorCore.swift in Sources */,
 				671BE8249D6673AF28E8B30B /* GameView.swift in Sources */,
 				FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */,
@@ -183,7 +187,7 @@
 				PRODUCT_NAME = CrystalBoy;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "CrystalBoy/CrystalBoy-Bridging-Header.h";
-				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 			};
 			name = Debug;
 		};
@@ -216,7 +220,7 @@
 				PRODUCT_NAME = CrystalBoy;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "CrystalBoy/CrystalBoy-Bridging-Header.h";
-				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 			};
 			name = Release;
 		};
