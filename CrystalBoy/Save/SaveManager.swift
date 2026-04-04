@@ -15,8 +15,7 @@ final class SaveManager {
     func setROM(url: URL) {
         romURL = url
         // Load battery save if exists
-        let savURL = batteryURL
-        if FileManager.default.fileExists(atPath: savURL.path) {
+        if let savURL = batteryURL, FileManager.default.fileExists(atPath: savURL.path) {
             _ = emulator.loadBattery(from: savURL)
         }
         startAutoSave()
@@ -24,13 +23,13 @@ final class SaveManager {
 
     // MARK: - Battery Saves (.sav)
 
-    private var batteryURL: URL {
-        guard let romURL else { fatalError("ROM not set") }
-        return romURL.deletingPathExtension().appendingPathExtension("sav")
+    private var batteryURL: URL? {
+        romURL?.deletingPathExtension().appendingPathExtension("sav")
     }
 
     func saveBattery() {
-        _ = emulator.saveBattery(to: batteryURL)
+        guard let url = batteryURL else { return }
+        _ = emulator.saveBattery(to: url)
     }
 
     private func startAutoSave() {
@@ -42,8 +41,8 @@ final class SaveManager {
 
     // MARK: - Save States
 
-    private var saveStatesDir: URL {
-        guard let romURL else { fatalError("ROM not set") }
+    private var saveStatesDir: URL? {
+        guard let romURL else { return nil }
         let name = romURL.deletingPathExtension().lastPathComponent
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
             .appendingPathComponent("CrystalBoy/SaveStates/\(name)")
@@ -52,7 +51,8 @@ final class SaveManager {
     }
 
     func saveState() {
-        let url = saveStatesDir.appendingPathComponent("slot-\(currentSlot).state")
+        guard let dir = saveStatesDir else { return }
+        let url = dir.appendingPathComponent("slot-\(currentSlot).state")
         if emulator.saveState(to: url) {
             onToast?("Saved Slot \(currentSlot)")
         }
@@ -60,7 +60,8 @@ final class SaveManager {
     }
 
     func loadState() {
-        let url = saveStatesDir.appendingPathComponent("slot-\(currentSlot).state")
+        guard let dir = saveStatesDir else { return }
+        let url = dir.appendingPathComponent("slot-\(currentSlot).state")
         guard FileManager.default.fileExists(atPath: url.path) else {
             onToast?("Slot \(currentSlot) is empty")
             return

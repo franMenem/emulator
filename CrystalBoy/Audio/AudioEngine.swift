@@ -1,4 +1,5 @@
 import AVFoundation
+import os
 
 final class AudioEngine {
     private let engine = AVAudioEngine()
@@ -8,8 +9,8 @@ final class AudioEngine {
     private var ringBuffer: [Float] = []
     private var writeIndex = 0
     private var readIndex = 0
-    private let lock = NSLock()
-    private var muted = false
+    private let lock = OSAllocatedUnfairLock()
+    private var _muted = false
 
     init() {
         ringBuffer = [Float](repeating: 0, count: bufferSize * 2) // stereo
@@ -68,20 +69,22 @@ final class AudioEngine {
     }
 
     func setMuted(_ muted: Bool) {
-        self.muted = muted
+        lock.lock()
+        _muted = muted
+        lock.unlock()
     }
 
     /// Called from emulation thread with each audio sample pair
     func pushSample(left: Int16, right: Int16) {
-        if muted { return }
-
-        let leftFloat = Float(left) / Float(Int16.max)
-        let rightFloat = Float(right) / Float(Int16.max)
-
         lock.lock()
-        ringBuffer[writeIndex] = leftFloat
-        ringBuffer[(writeIndex + 1) % (bufferSize * 2)] = rightFloat
-        writeIndex = (writeIndex + 2) % (bufferSize * 2)
+        let muted = _muted
+        if !muted {
+            let leftFloat = Float(left) / Float(Int16.max)
+            let rightFloat = Float(right) / Float(Int16.max)
+            ringBuffer[writeIndex] = leftFloat
+            ringBuffer[(writeIndex + 1) % (bufferSize * 2)] = rightFloat
+            writeIndex = (writeIndex + 2) % (bufferSize * 2)
+        }
         lock.unlock()
     }
 

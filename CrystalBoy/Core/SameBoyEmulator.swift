@@ -17,21 +17,7 @@ final class SameBoyEmulator: EmulatorCore {
 
     init(isColorGB: Bool = true) {
         context = sb_create(isColorGB)
-
-        let selfPtr = Unmanaged.passUnretained(self).toOpaque()
-        sb_set_user_data(context, selfPtr)
-
-        sb_set_video_callback(context) { userData, pixels in
-            guard let userData, let pixels else { return }
-            let emulator = Unmanaged<SameBoyEmulator>.fromOpaque(userData).takeUnretainedValue()
-            emulator.videoCallback?(pixels)
-        }
-
-        sb_set_audio_callback(context) { userData, left, right in
-            guard let userData else { return }
-            let emulator = Unmanaged<SameBoyEmulator>.fromOpaque(userData).takeUnretainedValue()
-            emulator.audioCallback?(left, right)
-        }
+        registerCallbacks()
     }
 
     deinit {
@@ -42,15 +28,16 @@ final class SameBoyEmulator: EmulatorCore {
 
     func loadROM(url: URL) throws {
         guard let ctx = context else { return }
+
+        // Load boot ROM before game ROM for correct boot sequence
+        if let bootROMPath = Bundle.main.path(forResource: "cgb_boot", ofType: "bin") {
+            sb_load_boot_rom(ctx, bootROMPath)
+        }
+
         let loaded = sb_load_rom(ctx, url.path)
         if !loaded {
             throw NSError(domain: "CrystalBoy", code: 1,
                          userInfo: [NSLocalizedDescriptionKey: "Failed to load ROM: \(url.lastPathComponent)"])
-        }
-
-        // Try loading boot ROM if available
-        if let bootROMPath = Bundle.main.path(forResource: "cgb_boot", ofType: "bin") {
-            sb_load_boot_rom(ctx, bootROMPath)
         }
     }
 
@@ -58,8 +45,7 @@ final class SameBoyEmulator: EmulatorCore {
         guard let context else { return }
         sb_destroy(context)
         self.context = sb_create(true)
-        let selfPtr = Unmanaged.passUnretained(self).toOpaque()
-        sb_set_user_data(self.context, selfPtr)
+        registerCallbacks()
     }
 
     func runFrame() {
@@ -123,5 +109,25 @@ final class SameBoyEmulator: EmulatorCore {
     func removeAllCheats() {
         guard let ctx = context else { return }
         sb_remove_all_cheats(ctx)
+    }
+
+    // MARK: - Private
+
+    private func registerCallbacks() {
+        guard let ctx = context else { return }
+        let selfPtr = Unmanaged.passUnretained(self).toOpaque()
+        sb_set_user_data(ctx, selfPtr)
+
+        sb_set_video_callback(ctx) { userData, pixels in
+            guard let userData, let pixels else { return }
+            let emulator = Unmanaged<SameBoyEmulator>.fromOpaque(userData).takeUnretainedValue()
+            emulator.videoCallback?(pixels)
+        }
+
+        sb_set_audio_callback(ctx) { userData, left, right in
+            guard let userData else { return }
+            let emulator = Unmanaged<SameBoyEmulator>.fromOpaque(userData).takeUnretainedValue()
+            emulator.audioCallback?(left, right)
+        }
     }
 }

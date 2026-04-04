@@ -19,16 +19,27 @@ final class LibraryManager: ObservableObject {
     @Published var folderURL: URL?
 
     private let defaultsKey = "CrystalBoy.ROMFolder"
+    private var accessedURL: URL?
 
     init() {
         if let bookmark = UserDefaults.standard.data(forKey: defaultsKey) {
             var isStale = false
             if let url = try? URL(resolvingBookmarkData: bookmark, options: .withSecurityScope, bookmarkDataIsStale: &isStale) {
-                _ = url.startAccessingSecurityScopedResource()
+                startAccess(url)
                 folderURL = url
+                // Refresh stale bookmark
+                if isStale {
+                    if let fresh = try? url.bookmarkData(options: .withSecurityScope) {
+                        UserDefaults.standard.set(fresh, forKey: defaultsKey)
+                    }
+                }
                 scan()
             }
         }
+    }
+
+    deinit {
+        accessedURL?.stopAccessingSecurityScopedResource()
     }
 
     func selectFolder() {
@@ -41,7 +52,7 @@ final class LibraryManager: ObservableObject {
         if panel.runModal() == .OK, let url = panel.url {
             let bookmark = try? url.bookmarkData(options: .withSecurityScope)
             UserDefaults.standard.set(bookmark, forKey: defaultsKey)
-            _ = url.startAccessingSecurityScopedResource()
+            startAccess(url)
             folderURL = url
             scan()
         }
@@ -58,5 +69,11 @@ final class LibraryManager: ObservableObject {
             .filter { ["gb", "gbc"].contains($0.pathExtension.lowercased()) }
             .map { ROMItem(url: $0) }
             .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+    }
+
+    private func startAccess(_ url: URL) {
+        accessedURL?.stopAccessingSecurityScopedResource()
+        _ = url.startAccessingSecurityScopedResource()
+        accessedURL = url
     }
 }

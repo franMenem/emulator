@@ -1,13 +1,32 @@
 import Foundation
 import QuartzCore
+import os
 
-final class EmulationThread {
+final class EmulationThread: @unchecked Sendable {
     private var thread: Thread?
-    private var isRunning = false
-    private var isPaused = false
     private let emulator: EmulatorCore
-    private var speedMultiplier: Float = 1.0
     var inputManager: InputManager?
+
+    // Thread-safe flags using os_unfair_lock
+    private var _isRunning = false
+    private var _isPaused = false
+    private var _speedMultiplier: Float = 1.0
+    private let lock = OSAllocatedUnfairLock()
+
+    private var isRunning: Bool {
+        get { lock.withLock { _isRunning } }
+        set { lock.withLock { _isRunning = newValue } }
+    }
+
+    private var isPaused: Bool {
+        get { lock.withLock { _isPaused } }
+        set { lock.withLock { _isPaused = newValue } }
+    }
+
+    private var speedMultiplier: Float {
+        get { lock.withLock { _speedMultiplier } }
+        set { lock.withLock { _speedMultiplier = newValue } }
+    }
 
     init(emulator: EmulatorCore) {
         self.emulator = emulator
@@ -52,18 +71,19 @@ final class EmulationThread {
             }
 
             let frameStart = CACurrentMediaTime()
+            let speed = speedMultiplier
 
             if inputManager?.isRewindActive == true {
                 _ = emulator.rewindPop()
             } else {
-                let framesToRun = max(1, Int(speedMultiplier))
+                let framesToRun = max(1, Int(speed))
                 for _ in 0..<framesToRun {
                     emulator.runFrame()
                 }
             }
 
             // Throttle to real-time (skip if fast forwarding)
-            if speedMultiplier <= 1.0 {
+            if speed <= 1.0 {
                 let elapsed = CACurrentMediaTime() - frameStart
                 let sleepTime = targetFrameTime - elapsed
                 if sleepTime > 0 {

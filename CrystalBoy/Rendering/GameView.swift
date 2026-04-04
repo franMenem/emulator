@@ -5,6 +5,7 @@ final class GameNSView: NSView {
     private var currentFrame: CGImage?
     private let width = 160
     private let height = 144
+    private let lock = NSLock()
 
     override var isFlipped: Bool { true }
 
@@ -20,27 +21,43 @@ final class GameNSView: NSView {
     }
 
     func updateFrame(pixels: UnsafePointer<UInt32>) {
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
+        let byteCount = width * height * 4
+        let data = Data(bytes: pixels, count: byteCount)
 
-        guard let context = CGContext(
-            data: UnsafeMutablePointer(mutating: pixels),
+        guard let provider = CGDataProvider(data: data as CFData) else { return }
+
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
+
+        guard let image = CGImage(
             width: width,
             height: height,
             bitsPerComponent: 8,
+            bitsPerPixel: 32,
             bytesPerRow: width * 4,
             space: colorSpace,
-            bitmapInfo: bitmapInfo.rawValue
+            bitmapInfo: bitmapInfo,
+            provider: provider,
+            decode: nil,
+            shouldInterpolate: false,
+            intent: .defaultIntent
         ) else { return }
 
-        currentFrame = context.makeImage()
+        lock.lock()
+        currentFrame = image
+        lock.unlock()
+
         DispatchQueue.main.async { [weak self] in
             self?.needsDisplay = true
         }
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        guard let currentFrame, let cgContext = NSGraphicsContext.current?.cgContext else { return }
+        lock.lock()
+        let frame = currentFrame
+        lock.unlock()
+
+        guard let frame, let cgContext = NSGraphicsContext.current?.cgContext else { return }
 
         cgContext.interpolationQuality = .none // nearest neighbor
 
@@ -62,7 +79,7 @@ final class GameNSView: NSView {
         cgContext.setFillColor(NSColor.black.cgColor)
         cgContext.fill(bounds)
 
-        cgContext.draw(currentFrame, in: drawRect)
+        cgContext.draw(frame, in: drawRect)
     }
 }
 
