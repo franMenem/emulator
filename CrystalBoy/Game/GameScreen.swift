@@ -1,13 +1,12 @@
 import SwiftUI
 
 struct GameScreen: View {
-    let gameNSView: GameNSView
+    @ObservedObject var renderer: FrameRenderer
     @ObservedObject var appState: AppState
 
     var body: some View {
         ZStack {
-            GameView(gameNSView: gameNSView)
-                .aspectRatio(CGFloat(160) / CGFloat(144), contentMode: .fit)
+            GameView(renderer: renderer)
                 .background(Color.black)
 
             // Toast overlay

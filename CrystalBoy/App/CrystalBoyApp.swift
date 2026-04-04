@@ -16,7 +16,7 @@ struct CrystalBoyApp: App {
                         session.startGame(rom: rom, appState: appState)
                     }
                 case .game:
-                    GameScreen(gameNSView: session.gameNSView, appState: appState)
+                    GameScreen(renderer: session.renderer, appState: appState)
                 }
             }
             .frame(minWidth: 320, minHeight: 288)

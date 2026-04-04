@@ -67,8 +67,35 @@ void sb_set_audio_callback(SBContext *ctx, SBAudioCallback callback) {
     }
 }
 
+// Perform a manual "quick boot" using only public SameBoy APIs.
+// Sets CPU/PPU state as if the boot ROM had just finished executing.
+static void manual_quick_boot(GB_gameboy_t *gb) {
+    bool is_cgb = GB_is_cgb(gb);
+
+    // Disable boot ROM overlay — writes 1 to IO register 0xFF50,
+    // which sets boot_rom_finished = true internally.
+    GB_write_memory(gb, 0xFF50, 0x01);
+
+    // CPU registers after boot ROM completes
+    GB_registers_t *regs = GB_get_registers(gb);
+    regs->pc = 0x0100;
+    regs->sp = 0xFFFE;
+    regs->af = is_cgb ? 0x1180 : 0x01B0;
+    regs->bc = 0x0013;
+    regs->de = 0x00D8;
+    regs->hl = 0x014D;
+
+    // Key I/O registers after boot
+    GB_write_memory(gb, 0xFF40, 0x91); // LCDC — LCD on, BG on
+    GB_write_memory(gb, 0xFF47, 0xFC); // BGP  — DMG background palette
+    GB_write_memory(gb, 0xFF48, 0xFF); // OBP0
+    GB_write_memory(gb, 0xFF49, 0xFF); // OBP1
+}
+
 bool sb_load_rom(SBContext *ctx, const char *path) {
-    return GB_load_rom(ctx->gb, path) == 0;
+    if (GB_load_rom(ctx->gb, path) != 0) return false;
+    manual_quick_boot(ctx->gb);
+    return true;
 }
 
 bool sb_load_boot_rom(SBContext *ctx, const char *path) {

@@ -34,6 +34,7 @@
 		4574F9731B1C6873EEA9291F /* SaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveManager.swift; sourceTree = "<group>"; };
 		45E9045303ABC112AC5035F7 /* SameBoyEmulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SameBoyEmulator.swift; sourceTree = "<group>"; };
 		58662172C00ED511AEEFFA9A /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputManager.swift; sourceTree = "<group>"; };
+		66223129D3D9E208E5A069CA /* CrystalBoy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CrystalBoy.entitlements; sourceTree = "<group>"; };
 		7E6B69F736882F928812EAEA /* CrystalBoy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrystalBoy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FE12140C4D9CC1EA0330581 /* SameBoyBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SameBoyBridge.h; sourceTree = "<group>"; };
 		8577785D2A870F9357F45AFF /* CheatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatManager.swift; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				A689816221F264BD33821B40 /* CrystalBoy-Bridging-Header.h */,
+				66223129D3D9E208E5A069CA /* CrystalBoy.entitlements */,
 				B4E1AF096D5785CD37B7DB26 /* App */,
 				7272F8C4090ED09E5C1D50AD /* Audio */,
 				2F92F44BF2DA0A21E5570B51 /* Core */,
@@ -263,8 +265,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = CrystalBoy/CrystalBoy.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -296,8 +300,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = CrystalBoy/CrystalBoy.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (

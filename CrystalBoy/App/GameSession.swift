@@ -5,7 +5,7 @@ import AppKit
 /// Lives as a @StateObject so SwiftUI doesn't reset it.
 @MainActor
 final class GameSession: ObservableObject {
-    let gameNSView = GameNSView(frame: .zero)
+    let renderer = FrameRenderer()
 
     private(set) var emulator: SameBoyEmulator?
     private(set) var emuThread: EmulationThread?
@@ -47,9 +47,9 @@ final class GameSession: ObservableObject {
         }
 
         // Video
-        let view = gameNSView
+        let renderer = self.renderer
         emu.setVideoCallback { pixels in
-            view.updateFrame(pixels: pixels)
+            renderer.updateFrame(pixels: pixels)
         }
 
         // Rewind

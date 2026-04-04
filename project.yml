@@ -42,3 +42,5 @@ targets:
         CODE_SIGN_IDENTITY: "-"
         CODE_SIGNING_REQUIRED: false
         GENERATE_INFOPLIST_FILE: true
+        ENABLE_APP_SANDBOX: false
+        CODE_SIGN_ENTITLEMENTS: CrystalBoy/CrystalBoy.entitlements
