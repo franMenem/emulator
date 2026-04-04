@@ -1,0 +1,5 @@
+module SameBoyCore {
+    header "include/gb.h"
+    link "sameboy"
+    export *
+}

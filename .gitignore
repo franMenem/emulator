@@ -1,2 +1,4 @@
 SameBoyCore/SameBoy/
+SameBoyCore/vendor/
+SameBoyCore/boot/
 .DS_Store
