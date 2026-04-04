@@ -14,14 +14,21 @@
 		574BD515765F2D758C7590F7 /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58662172C00ED511AEEFFA9A /* InputManager.swift */; };
 		671BE8249D6673AF28E8B30B /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1964EC2638778DCA24B70A0 /* GameView.swift */; };
 		845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */; };
+		8717441798175369FF9535C9 /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C844BCC9AC213AAC925FCA /* GameScreen.swift */; };
+		A7935238FF3920D8CD80B4E1 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3DD2196BB2C19E1F8CE976 /* LibraryView.swift */; };
 		B1EFC7C253D12208B49943B1 /* CheatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577785D2A870F9357F45AFF /* CheatManager.swift */; };
+		E23A7BA68C88FDA190C84304 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0D2E0F1F5BB89729BAFB2F /* AppState.swift */; };
+		E42F87F5D70E42AA3EEA5649 /* LibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8CAB6AA05BBCBD8D6803CE /* LibraryManager.swift */; };
 		E7452DCA0A3675993E647FFE /* EmulatorCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20171E61B9ED169F56792B98 /* EmulatorCore.swift */; };
 		E7EE6FA968DE776B28C2D8CE /* EmulationThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66F5A27EF6E1638BA203EAF /* EmulationThread.swift */; };
+		E8AA6DF646E16177C369F2C6 /* ControlsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65E8FBFBBDC07F16F71F2E3 /* ControlsSettingsView.swift */; };
 		FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		20171E61B9ED169F56792B98 /* EmulatorCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorCore.swift; sourceTree = "<group>"; };
+		37C844BCC9AC213AAC925FCA /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
+		3E8CAB6AA05BBCBD8D6803CE /* LibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryManager.swift; sourceTree = "<group>"; };
 		4574F9731B1C6873EEA9291F /* SaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveManager.swift; sourceTree = "<group>"; };
 		45E9045303ABC112AC5035F7 /* SameBoyEmulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SameBoyEmulator.swift; sourceTree = "<group>"; };
 		58662172C00ED511AEEFFA9A /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputManager.swift; sourceTree = "<group>"; };
@@ -33,8 +40,11 @@
 		A689816221F264BD33821B40 /* CrystalBoy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CrystalBoy-Bridging-Header.h"; sourceTree = "<group>"; };
 		AEEE8FCD6954599C522016AE /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalBoyApp.swift; sourceTree = "<group>"; };
+		C65E8FBFBBDC07F16F71F2E3 /* ControlsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsSettingsView.swift; sourceTree = "<group>"; };
+		DC0D2E0F1F5BB89729BAFB2F /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E1964EC2638778DCA24B70A0 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		E66F5A27EF6E1638BA203EAF /* EmulationThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulationThread.swift; sourceTree = "<group>"; };
+		ED3DD2196BB2C19E1F8CE976 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -99,6 +109,14 @@
 			path = Bridge;
 			sourceTree = "<group>";
 		};
+		369394399F6F96C468737B3E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C65E8FBFBBDC07F16F71F2E3 /* ControlsSettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		58D2E1C564E9A3F8FAD20FBF /* CrystalBoy */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,11 +125,22 @@
 				7272F8C4090ED09E5C1D50AD /* Audio */,
 				2F92F44BF2DA0A21E5570B51 /* Core */,
 				AE732DB6929010A440FAA4AA /* Features */,
+				69B5F255FA727D5F90087501 /* Game */,
 				2AB2B0C86FFCBFD2E57AAB9F /* Input */,
+				916A3EAD19E5DE9051915E7E /* Library */,
 				2E63C39BF02D81FA80EE03DF /* Rendering */,
 				2F81A00D7C40C4635EB5342E /* Save */,
+				369394399F6F96C468737B3E /* Settings */,
 			);
 			path = CrystalBoy;
+			sourceTree = "<group>";
+		};
+		69B5F255FA727D5F90087501 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				37C844BCC9AC213AAC925FCA /* GameScreen.swift */,
+			);
+			path = Game;
 			sourceTree = "<group>";
 		};
 		7272F8C4090ED09E5C1D50AD /* Audio */ = {
@@ -120,6 +149,15 @@
 				AEEE8FCD6954599C522016AE /* AudioEngine.swift */,
 			);
 			path = Audio;
+			sourceTree = "<group>";
+		};
+		916A3EAD19E5DE9051915E7E /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				3E8CAB6AA05BBCBD8D6803CE /* LibraryManager.swift */,
+				ED3DD2196BB2C19E1F8CE976 /* LibraryView.swift */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 		AE732DB6929010A440FAA4AA /* Features */ = {
@@ -133,6 +171,7 @@
 		B4E1AF096D5785CD37B7DB26 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				DC0D2E0F1F5BB89729BAFB2F /* AppState.swift */,
 				B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */,
 			);
 			path = App;
@@ -193,14 +232,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E23A7BA68C88FDA190C84304 /* AppState.swift in Sources */,
 				1593CFE374A1C2D183377D93 /* AudioEngine.swift in Sources */,
 				B1EFC7C253D12208B49943B1 /* CheatManager.swift in Sources */,
+				E8AA6DF646E16177C369F2C6 /* ControlsSettingsView.swift in Sources */,
 				845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */,
 				E7EE6FA968DE776B28C2D8CE /* EmulationThread.swift in Sources */,
 				E7452DCA0A3675993E647FFE /* EmulatorCore.swift in Sources */,
+				8717441798175369FF9535C9 /* GameScreen.swift in Sources */,
 				671BE8249D6673AF28E8B30B /* GameView.swift in Sources */,
 				574BD515765F2D758C7590F7 /* InputManager.swift in Sources */,
 				42F943C691C521EF58D0F18E /* KeyBindings.swift in Sources */,
+				E42F87F5D70E42AA3EEA5649 /* LibraryManager.swift in Sources */,
+				A7935238FF3920D8CD80B4E1 /* LibraryView.swift in Sources */,
 				FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */,
 				37E02A8CA8DC8705C128E365 /* SameBoyEmulator.swift in Sources */,
 				45985EB7697426232BC92315 /* SaveManager.swift in Sources */,
