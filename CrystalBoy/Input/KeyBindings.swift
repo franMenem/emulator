@@ -15,7 +15,7 @@ enum EmulatorAction: String, CaseIterable, Codable {
     // Speed
     case rewind, fastForward, speedUp, speedDown, speedReset
     // Emulator
-    case pause, toggleCheats, backToLibrary
+    case pause, toggleCheats, showHelp, backToLibrary
 
     var category: ActionCategory {
         switch self {
@@ -25,7 +25,7 @@ enum EmulatorAction: String, CaseIterable, Codable {
             return .saveLoad
         case .rewind, .fastForward, .speedUp, .speedDown, .speedReset:
             return .speed
-        case .pause, .toggleCheats, .backToLibrary:
+        case .pause, .toggleCheats, .showHelp, .backToLibrary:
             return .emulator
         }
     }
@@ -65,6 +65,7 @@ enum EmulatorAction: String, CaseIterable, Codable {
         case .nextSlot: return UInt16(kVK_F3)
         case .toggleCheats: return UInt16(kVK_F9)
         case .pause: return UInt16(kVK_Space)
+        case .showHelp: return UInt16(kVK_ANSI_H)
         case .backToLibrary: return UInt16(kVK_Escape)
         }
     }
@@ -90,6 +91,7 @@ enum EmulatorAction: String, CaseIterable, Codable {
         case .speedReset: return "Reset Speed (1x)"
         case .pause: return "Pause"
         case .toggleCheats: return "Toggle Cheats"
+        case .showHelp: return "Show Controls (hold)"
         case .backToLibrary: return "Back to Library"
         }
     }

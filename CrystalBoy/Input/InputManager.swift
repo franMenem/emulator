@@ -15,6 +15,7 @@ final class InputManager {
     var onPause: (() -> Void)?
     var onBackToLibrary: (() -> Void)?
     var onSpeedChange: ((Float) -> Void)?
+    var onShowHelp: ((Bool) -> Void)?
 
     // Speed steps
     private let speedSteps: [Float] = [0.25, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0]
@@ -95,6 +96,8 @@ final class InputManager {
             if pressed { changeSpeed(delta: -1) }
         case .speedReset:
             if pressed { setSpeedIndex(2) } // 1.0x
+        case .showHelp:
+            onShowHelp?(pressed)
         case .pause:
             if pressed { onPause?() }
         case .backToLibrary:

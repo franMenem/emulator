@@ -91,6 +91,9 @@ final class GameSession: ObservableObject {
         input.onPrevSlot = { saves.prevSlot() }
         input.onNextSlot = { saves.nextSlot() }
         input.onToggleCheats = { cheats.toggleCheats() }
+        input.onShowHelp = { show in
+            Task { @MainActor in appState.showHelp = show }
+        }
         input.onSpeedChange = { speed in
             let label = speed == Float(Int(speed)) ? "\(Int(speed))x" : String(format: "%.1fx", speed)
             Task { @MainActor in appState.showToast("Speed: \(label)") }

@@ -9,6 +9,7 @@ enum AppScreen {
 final class AppState: ObservableObject {
     @Published var currentScreen: AppScreen = .library
     @Published var toastMessage: String?
+    @Published var showHelp = false
 
     func showToast(_ message: String) {
         toastMessage = message
