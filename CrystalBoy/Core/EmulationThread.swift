@@ -7,6 +7,7 @@ final class EmulationThread {
     private var isPaused = false
     private let emulator: EmulatorCore
     private var speedMultiplier: Float = 1.0
+    var inputManager: InputManager?
 
     init(emulator: EmulatorCore) {
         self.emulator = emulator
@@ -52,9 +53,13 @@ final class EmulationThread {
 
             let frameStart = CACurrentMediaTime()
 
-            let framesToRun = max(1, Int(speedMultiplier))
-            for _ in 0..<framesToRun {
-                emulator.runFrame()
+            if inputManager?.isRewindActive == true {
+                _ = emulator.rewindPop()
+            } else {
+                let framesToRun = max(1, Int(speedMultiplier))
+                for _ in 0..<framesToRun {
+                    emulator.runFrame()
+                }
             }
 
             // Throttle to real-time (skip if fast forwarding)
