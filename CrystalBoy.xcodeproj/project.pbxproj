@@ -1,0 +1,338 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */; };
+		FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include"; }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7E6B69F736882F928812EAEA /* CrystalBoy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrystalBoy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FE12140C4D9CC1EA0330581 /* SameBoyBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SameBoyBridge.h; sourceTree = "<group>"; };
+		9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SameBoyBridge.c; sourceTree = "<group>"; };
+		A689816221F264BD33821B40 /* CrystalBoy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CrystalBoy-Bridging-Header.h"; sourceTree = "<group>"; };
+		B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalBoyApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0D74D2EB901CAA779A18D12B = {
+			isa = PBXGroup;
+			children = (
+				326D09C51EB6C370B228447E /* Bridge */,
+				58D2E1C564E9A3F8FAD20FBF /* CrystalBoy */,
+				1426770082F66EF91CF1A310 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1426770082F66EF91CF1A310 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7E6B69F736882F928812EAEA /* CrystalBoy.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		326D09C51EB6C370B228447E /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */,
+				7FE12140C4D9CC1EA0330581 /* SameBoyBridge.h */,
+			);
+			path = Bridge;
+			sourceTree = "<group>";
+		};
+		58D2E1C564E9A3F8FAD20FBF /* CrystalBoy */ = {
+			isa = PBXGroup;
+			children = (
+				A689816221F264BD33821B40 /* CrystalBoy-Bridging-Header.h */,
+				B4E1AF096D5785CD37B7DB26 /* App */,
+			);
+			path = CrystalBoy;
+			sourceTree = "<group>";
+		};
+		B4E1AF096D5785CD37B7DB26 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D865BF36990A7DCF3E67F69B /* CrystalBoy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B8BE850F3340D76F5A679F2 /* Build configuration list for PBXNativeTarget "CrystalBoy" */;
+			buildPhases = (
+				BBCA86D0D86E2A2AA917A961 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CrystalBoy;
+			packageProductDependencies = (
+			);
+			productName = CrystalBoy;
+			productReference = 7E6B69F736882F928812EAEA /* CrystalBoy.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EB012BBE4737DF876C8EBA12 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 463EFF03D196A47B41A6A3FF /* Build configuration list for PBXProject "CrystalBoy" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 0D74D2EB901CAA779A18D12B;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1426770082F66EF91CF1A310 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D865BF36990A7DCF3E67F69B /* CrystalBoy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BBCA86D0D86E2A2AA917A961 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */,
+				FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		001B389C410CD5154EA3664D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/SameBoyCore/include",
+					"$(SRCROOT)/Bridge",
+				);
+				INFOPLIST_GENERATION_MODE = GeneratedByXcode;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/SameBoyCore",
+				);
+				OTHER_LDFLAGS = (
+					"-lsameboy",
+					"-lm",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crystalboy.app;
+				PRODUCT_NAME = CrystalBoy;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "CrystalBoy/CrystalBoy-Bridging-Header.h";
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Debug;
+		};
+		2484E20E1C2DAF652E274674 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/SameBoyCore/include",
+					"$(SRCROOT)/Bridge",
+				);
+				INFOPLIST_GENERATION_MODE = GeneratedByXcode;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/SameBoyCore",
+				);
+				OTHER_LDFLAGS = (
+					"-lsameboy",
+					"-lm",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crystalboy.app;
+				PRODUCT_NAME = CrystalBoy;
+				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "CrystalBoy/CrystalBoy-Bridging-Header.h";
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Release;
+		};
+		512F2F169D58A72E45E3CD49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		AAD7B41FA342597D3E3F2BC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		463EFF03D196A47B41A6A3FF /* Build configuration list for PBXProject "CrystalBoy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAD7B41FA342597D3E3F2BC2 /* Debug */,
+				512F2F169D58A72E45E3CD49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5B8BE850F3340D76F5A679F2 /* Build configuration list for PBXNativeTarget "CrystalBoy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				001B389C410CD5154EA3664D /* Debug */,
+				2484E20E1C2DAF652E274674 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EB012BBE4737DF876C8EBA12 /* Project object */;
+}

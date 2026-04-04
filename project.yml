@@ -1,0 +1,44 @@
+name: CrystalBoy
+options:
+  bundleIdPrefix: com.crystalboy
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "16.0"
+  minimumXcodeGenVersion: "2.40.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+
+targets:
+  CrystalBoy:
+    type: application
+    platform: macOS
+    sources:
+      - path: CrystalBoy
+        excludes:
+          - "**/.DS_Store"
+      - path: Bridge
+        type: group
+        compilerFlags:
+          - "-I$(SRCROOT)/SameBoyCore/include"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.crystalboy.app
+        PRODUCT_NAME: CrystalBoy
+        INFOPLIST_GENERATION_MODE: GeneratedByXcode
+        SWIFT_OBJC_BRIDGING_HEADER: CrystalBoy/CrystalBoy-Bridging-Header.h
+        HEADER_SEARCH_PATHS:
+          - "$(SRCROOT)/SameBoyCore/include"
+          - "$(SRCROOT)/Bridge"
+        LIBRARY_SEARCH_PATHS:
+          - "$(SRCROOT)/SameBoyCore"
+        OTHER_LDFLAGS:
+          - "-lsameboy"
+          - "-lm"
+        SWIFT_STRICT_CONCURRENCY: complete
+        ENABLE_USER_SCRIPT_SANDBOXING: false
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGNING_REQUIRED: false
+        GENERATE_INFOPLIST_FILE: true
