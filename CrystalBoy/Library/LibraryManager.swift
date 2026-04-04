@@ -71,6 +71,31 @@ final class LibraryManager: ObservableObject {
             .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
 
+    /// Import a .sav file for a given ROM. Copies it next to the ROM with matching name.
+    func importSave(for rom: ROMItem) {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = true
+        panel.canChooseDirectories = false
+        panel.allowedContentTypes = [.data]
+        panel.allowsOtherFileTypes = true
+        panel.message = "Select the .sav file for \(rom.name)"
+
+        if panel.runModal() == .OK, let sourceURL = panel.url {
+            let destURL = rom.url.deletingPathExtension().appendingPathExtension("sav")
+            do {
+                if FileManager.default.fileExists(atPath: destURL.path) {
+                    // Backup existing save
+                    let backupURL = destURL.appendingPathExtension("backup")
+                    try? FileManager.default.removeItem(at: backupURL)
+                    try FileManager.default.moveItem(at: destURL, to: backupURL)
+                }
+                try FileManager.default.copyItem(at: sourceURL, to: destURL)
+            } catch {
+                print("Failed to import save: \(error)")
+            }
+        }
+    }
+
     private func startAccess(_ url: URL) {
         accessedURL?.stopAccessingSecurityScopedResource()
         _ = url.startAccessingSecurityScopedResource()

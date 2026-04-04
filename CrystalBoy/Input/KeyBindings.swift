@@ -1,13 +1,34 @@
 import Carbon.HIToolbox
 
+enum ActionCategory: String, CaseIterable {
+    case gameButtons = "Game Buttons"
+    case saveLoad = "Save & Load"
+    case speed = "Speed"
+    case emulator = "Emulator"
+}
+
 enum EmulatorAction: String, CaseIterable, Codable {
     // Game buttons
     case up, down, left, right, a, b, start, select
-    // Emulator actions
+    // Save/Load
     case saveState, loadState, prevSlot, nextSlot
-    case rewind, fastForward, pause
-    case toggleCheats
-    case backToLibrary
+    // Speed
+    case rewind, fastForward, speedUp, speedDown, speedReset
+    // Emulator
+    case pause, toggleCheats, backToLibrary
+
+    var category: ActionCategory {
+        switch self {
+        case .up, .down, .left, .right, .a, .b, .start, .select:
+            return .gameButtons
+        case .saveState, .loadState, .prevSlot, .nextSlot:
+            return .saveLoad
+        case .rewind, .fastForward, .speedUp, .speedDown, .speedReset:
+            return .speed
+        case .pause, .toggleCheats, .backToLibrary:
+            return .emulator
+        }
+    }
 
     var gameButton: GameButton? {
         switch self {
@@ -35,6 +56,9 @@ enum EmulatorAction: String, CaseIterable, Codable {
         case .select: return UInt16(kVK_Delete)
         case .rewind: return UInt16(kVK_ANSI_R)
         case .fastForward: return UInt16(kVK_Tab)
+        case .speedUp: return UInt16(kVK_ANSI_Equal)       // +/=
+        case .speedDown: return UInt16(kVK_ANSI_Minus)      // -
+        case .speedReset: return UInt16(kVK_ANSI_0)         // 0
         case .saveState: return UInt16(kVK_F5)
         case .loadState: return UInt16(kVK_F7)
         case .prevSlot: return UInt16(kVK_F2)
@@ -61,10 +85,17 @@ enum EmulatorAction: String, CaseIterable, Codable {
         case .nextSlot: return "Next Slot"
         case .rewind: return "Rewind (hold)"
         case .fastForward: return "Fast Forward (hold)"
+        case .speedUp: return "Speed Up"
+        case .speedDown: return "Speed Down"
+        case .speedReset: return "Reset Speed (1x)"
         case .pause: return "Pause"
         case .toggleCheats: return "Toggle Cheats"
         case .backToLibrary: return "Back to Library"
         }
+    }
+
+    static func actions(for category: ActionCategory) -> [EmulatorAction] {
+        allCases.filter { $0.category == category }
     }
 }
 
@@ -92,7 +123,6 @@ final class KeyBindings {
     }
 
     func setBinding(keyCode: UInt16, action: EmulatorAction) {
-        // Remove old binding for this action
         bindings = bindings.filter { $0.value != action }
         bindings[keyCode] = action
         save()
@@ -100,6 +130,11 @@ final class KeyBindings {
 
     func keyCode(for action: EmulatorAction) -> UInt16? {
         bindings.first(where: { $0.value == action })?.key
+    }
+
+    func resetToDefaults() {
+        bindings = Self.defaultBindings()
+        save()
     }
 
     private func save() {

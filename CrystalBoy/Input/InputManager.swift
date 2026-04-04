@@ -14,6 +14,11 @@ final class InputManager {
     var onToggleCheats: (() -> Void)?
     var onPause: (() -> Void)?
     var onBackToLibrary: (() -> Void)?
+    var onSpeedChange: ((Float) -> Void)?
+
+    // Speed steps
+    private let speedSteps: [Float] = [0.25, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0]
+    private var currentSpeedIndex = 2 // 1.0x
 
     // Hold-state tracking for rewind/fast forward
     private(set) var isRewindActive = false
@@ -65,8 +70,15 @@ final class InputManager {
             isRewindActive = pressed
         case .fastForward:
             isFastForwarding = pressed
-            emuThread?.setSpeed(pressed ? 4.0 : 1.0)
-            audioEngine?.setMuted(pressed)
+            if pressed {
+                emuThread?.setSpeed(4.0)
+                audioEngine?.setMuted(true)
+            } else {
+                // Restore current speed setting
+                let speed = speedSteps[currentSpeedIndex]
+                emuThread?.setSpeed(speed)
+                audioEngine?.setMuted(speed != 1.0)
+            }
         case .saveState:
             if pressed { onSaveState?() }
         case .loadState:
@@ -77,6 +89,12 @@ final class InputManager {
             if pressed { onNextSlot?() }
         case .toggleCheats:
             if pressed { onToggleCheats?() }
+        case .speedUp:
+            if pressed { changeSpeed(delta: 1) }
+        case .speedDown:
+            if pressed { changeSpeed(delta: -1) }
+        case .speedReset:
+            if pressed { setSpeedIndex(2) } // 1.0x
         case .pause:
             if pressed { onPause?() }
         case .backToLibrary:
@@ -84,6 +102,18 @@ final class InputManager {
         default:
             break
         }
+    }
+
+    private func changeSpeed(delta: Int) {
+        setSpeedIndex(currentSpeedIndex + delta)
+    }
+
+    private func setSpeedIndex(_ index: Int) {
+        currentSpeedIndex = max(0, min(speedSteps.count - 1, index))
+        let speed = speedSteps[currentSpeedIndex]
+        emuThread?.setSpeed(speed)
+        audioEngine?.setMuted(speed != 1.0)
+        onSpeedChange?(speed)
     }
 
     // MARK: - Gamepad
