@@ -77,13 +77,18 @@ final class AudioEngine {
     /// Called from emulation thread with each audio sample pair
     func pushSample(left: Int16, right: Int16) {
         lock.lock()
-        let muted = _muted
-        if !muted {
-            let leftFloat = Float(left) / Float(Int16.max)
-            let rightFloat = Float(right) / Float(Int16.max)
-            ringBuffer[writeIndex] = leftFloat
-            ringBuffer[(writeIndex + 1) % (bufferSize * 2)] = rightFloat
-            writeIndex = (writeIndex + 2) % (bufferSize * 2)
+        if !_muted {
+            // Check capacity: drop sample if buffer is full
+            let capacity = bufferSize * 2
+            let used = (writeIndex - readIndex + capacity) % capacity
+            if used + 2 < capacity {
+                let leftFloat = Float(left) / Float(Int16.max)
+                let rightFloat = Float(right) / Float(Int16.max)
+                ringBuffer[writeIndex] = leftFloat
+                ringBuffer[(writeIndex + 1) % capacity] = rightFloat
+                writeIndex = (writeIndex + 2) % capacity
+            }
+            // else: buffer full, drop this sample (preferable to corruption)
         }
         lock.unlock()
     }
