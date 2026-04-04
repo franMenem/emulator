@@ -21,10 +21,18 @@ final class InputManager {
 
     var audioEngine: AudioEngine?
 
+    private var controllerObserver: NSObjectProtocol?
+
     init(emulator: EmulatorCore, emuThread: EmulationThread?) {
         self.emulator = emulator
         self.emuThread = emuThread
         setupGamepad()
+    }
+
+    deinit {
+        if let obs = controllerObserver {
+            NotificationCenter.default.removeObserver(obs)
+        }
     }
 
     func setEmuThread(_ thread: EmulationThread) {
@@ -81,7 +89,7 @@ final class InputManager {
     // MARK: - Gamepad
 
     private func setupGamepad() {
-        NotificationCenter.default.addObserver(
+        controllerObserver = NotificationCenter.default.addObserver(
             forName: .GCControllerDidConnect, object: nil, queue: .main
         ) { [weak self] notification in
             if let controller = notification.object as? GCController {

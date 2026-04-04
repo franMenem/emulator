@@ -47,7 +47,7 @@ SBContext *sb_create(bool isColorGB) {
 
 void sb_destroy(SBContext *ctx) {
     if (!ctx) return;
-    GB_free(ctx->gb);
+    // GB_dealloc internally calls GB_free then frees the allocation
     GB_dealloc(ctx->gb);
     free(ctx);
 }

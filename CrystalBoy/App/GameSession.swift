@@ -73,7 +73,7 @@ final class GameSession: ObservableObject {
         thread.inputManager = input
 
         // Saves
-        let saves = SaveManager(emulator: emu)
+        let saves = SaveManager(emulator: emu, emuThread: thread)
         saves.setROM(url: rom.url)
         saves.onToast = { msg in
             Task { @MainActor in appState.showToast(msg) }

@@ -2,14 +2,16 @@ import Foundation
 
 final class SaveManager {
     private let emulator: EmulatorCore
+    private weak var emuThread: EmulationThread?
     private var romURL: URL?
     private var currentSlot: Int = 0
     private var autoSaveTimer: Timer?
 
     var onToast: ((String) -> Void)?
 
-    init(emulator: EmulatorCore) {
+    init(emulator: EmulatorCore, emuThread: EmulationThread) {
         self.emulator = emulator
+        self.emuThread = emuThread
     }
 
     func setROM(url: URL) {
@@ -29,7 +31,10 @@ final class SaveManager {
 
     func saveBattery() {
         guard let url = batteryURL else { return }
+        // Pause emulation to avoid racing with runFrame on the emu thread
+        emuThread?.pause()
         _ = emulator.saveBattery(to: url)
+        emuThread?.resume()
     }
 
     private func startAutoSave() {
@@ -53,10 +58,13 @@ final class SaveManager {
     func saveState() {
         guard let dir = saveStatesDir else { return }
         let url = dir.appendingPathComponent("slot-\(currentSlot).state")
-        if emulator.saveState(to: url) {
-            onToast?("Saved Slot \(currentSlot)")
+        emuThread?.pause()
+        let ok = emulator.saveState(to: url)
+        if let batURL = batteryURL {
+            _ = emulator.saveBattery(to: batURL)
         }
-        saveBattery()
+        emuThread?.resume()
+        if ok { onToast?("Saved Slot \(currentSlot)") }
     }
 
     func loadState() {
@@ -66,9 +74,10 @@ final class SaveManager {
             onToast?("Slot \(currentSlot) is empty")
             return
         }
-        if emulator.loadState(from: url) {
-            onToast?("Loaded Slot \(currentSlot)")
-        }
+        emuThread?.pause()
+        let ok = emulator.loadState(from: url)
+        emuThread?.resume()
+        if ok { onToast?("Loaded Slot \(currentSlot)") }
     }
 
     func nextSlot() {
