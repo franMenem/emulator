@@ -87,6 +87,14 @@ enum ConsoleType: String, CaseIterable, Codable {
         }
     }
 
+    /// Console types with compiled cores available. Update as cores are added in Phases 1-4.
+    static let availableCores: Set<ConsoleType> = [.gb, .gbc]
+
+    /// File extensions for available cores only
+    static var availableExtensions: Set<String> {
+        Set(availableCores.flatMap { $0.extensions })
+    }
+
     /// All supported file extensions across all consoles
     static var allExtensions: Set<String> {
         Set(allCases.flatMap { $0.extensions })
@@ -726,16 +734,14 @@ Replace the `scan()` method:
         ) else { return }
 
         // Only scan extensions for cores that are actually available
-        let availableExtensions = Set(GameSession.availableCores.flatMap { $0.extensions })
-
         roms = contents
-            .filter { availableExtensions.contains($0.pathExtension.lowercased()) }
+            .filter { ConsoleType.availableExtensions.contains($0.pathExtension.lowercased()) }
             .map { ROMItem(url: $0) }
             .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
 ```
 
-Note: As each core is added in Phases 1-4, simply add the console type to `GameSession.availableCores` and the library will automatically pick up those ROM files.
+Note: As each core is added in Phases 1-4, simply add the console type to `ConsoleType.availableCores` and the library will automatically pick up those ROM files.
 
 - [ ] **Step 3: Add filtered roms computed property**
 
@@ -1077,9 +1083,6 @@ Add this method to `GameSession`:
             return nil  // Core not yet implemented
         }
     }
-
-    /// Console types that have a compiled core available
-    static let availableCores: Set<ConsoleType> = [.gb, .gbc]
 ```
 
 - [ ] **Step 2: Use factory in startGame()**
