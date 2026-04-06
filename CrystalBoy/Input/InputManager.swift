@@ -16,6 +16,7 @@ final class InputManager {
     var onBackToLibrary: (() -> Void)?
     var onSpeedChange: ((Float) -> Void)?
     var onShowHelp: ((Bool) -> Void)?
+    var onVolumeChange: ((Float, Bool) -> Void)?  // (volume, isMuted)
 
     // Speed: 5% increments, range 25%-400%
     private var currentSpeed: Float = 1.0
@@ -93,6 +94,27 @@ final class InputManager {
             if pressed { onPause?() }
         case .backToLibrary:
             if pressed { onBackToLibrary?() }
+        case .volumeUp:
+            if pressed {
+                if let audio = audioEngine {
+                    audio.setVolume(audio.volume + 0.1)
+                    onVolumeChange?(audio.volume, audio.isMuted)
+                }
+            }
+        case .volumeDown:
+            if pressed {
+                if let audio = audioEngine {
+                    audio.setVolume(audio.volume - 0.1)
+                    onVolumeChange?(audio.volume, audio.isMuted)
+                }
+            }
+        case .mute:
+            if pressed {
+                audioEngine?.toggleMute()
+                if let audio = audioEngine {
+                    onVolumeChange?(audio.volume, audio.isMuted)
+                }
+            }
         default:
             break
         }
