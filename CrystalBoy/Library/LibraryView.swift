@@ -3,6 +3,7 @@ import SwiftUI
 struct LibraryView: View {
     @ObservedObject var library: LibraryManager
     var onSelectROM: (ROMItem) -> Void
+    var onOpenSettings: () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
@@ -12,6 +13,16 @@ struct LibraryView: View {
                     .font(.headline)
                     .foregroundStyle(.white)
                 Spacer()
+                Button {
+                    onOpenSettings()
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                        .font(.title3)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.gray)
+                .help("Controls Settings")
+
                 Button("Select Folder") {
                     library.selectFolder()
                 }
@@ -74,7 +85,7 @@ struct LibraryView: View {
 
             // Footer hint
             HStack {
-                Text("Double-click to play  |  Right-click for options  |  Cmd+, for controls")
+                Text("Double-click to play  |  Hold H in-game for controls")
                     .font(.caption)
                     .foregroundStyle(.gray)
             }

@@ -14,6 +14,8 @@ struct CrystalBoyApp: App {
                 case .library:
                     LibraryView(library: library) { rom in
                         session.startGame(rom: rom, appState: appState)
+                    } onOpenSettings: {
+                        showControlsSettings = true
                     }
                 case .game:
                     GameScreen(renderer: session.renderer, appState: appState, keyBindings: session.inputManager?.keyBindings)
