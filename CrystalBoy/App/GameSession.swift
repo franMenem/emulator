@@ -8,7 +8,7 @@ final class GameSession: ObservableObject {
     let renderer = FrameRenderer()
     let toolbarState = ToolbarState()
 
-    private(set) var emulator: SameBoyEmulator?
+    private(set) var emulator: EmulatorCore?
     private(set) var emuThread: EmulationThread?
     private(set) var inputManager: InputManager?
     private(set) var audioEngine: AudioEngine?
@@ -16,6 +16,7 @@ final class GameSession: ObservableObject {
     private(set) var cheatManager: CheatManager?
 
     @Published var manuallyPaused = false
+    @Published var activeConsoleType: ConsoleType?
 
     private var keyDownMonitor: Any?
     private var keyUpMonitor: Any?
@@ -33,7 +34,10 @@ final class GameSession: ObservableObject {
     func startGame(rom: ROMItem, appState: AppState) {
         stopGame()
 
-        let emu = SameBoyEmulator(isColorGB: rom.isColor)
+        guard let emu = makeEmulator(for: rom) else {
+            return
+        }
+        activeConsoleType = rom.consoleType
 
         // Audio
         let audio = AudioEngine()
@@ -215,6 +219,18 @@ final class GameSession: ObservableObject {
         audioEngine = nil
         saveManager = nil
         cheatManager = nil
+        activeConsoleType = nil
+    }
+
+    // MARK: - Core Factory
+
+    private func makeEmulator(for rom: ROMItem) -> EmulatorCore? {
+        switch rom.consoleType {
+        case .gb, .gbc:
+            return SameBoyEmulator(isColorGB: rom.consoleType == .gbc)
+        case .gba, .nes, .snes, .genesis:
+            return nil  // Core not yet implemented
+        }
     }
 
     // MARK: - Focus Notifications
