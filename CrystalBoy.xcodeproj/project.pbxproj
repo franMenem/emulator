@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		1593CFE374A1C2D183377D93 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEE8FCD6954599C522016AE /* AudioEngine.swift */; };
 		37E02A8CA8DC8705C128E365 /* SameBoyEmulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9045303ABC112AC5035F7 /* SameBoyEmulator.swift */; };
+		3C34A8B560A4918E65B69023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0A2207E0AC9626CD10669B7 /* Assets.xcassets */; };
 		42F943C691C521EF58D0F18E /* KeyBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FC3F1FCAA610F2A7766F21 /* KeyBindings.swift */; };
 		45985EB7697426232BC92315 /* SaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574F9731B1C6873EEA9291F /* SaveManager.swift */; };
 		574BD515765F2D758C7590F7 /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58662172C00ED511AEEFFA9A /* InputManager.swift */; };
+		6405EE8835824C396B0576BB /* CheatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EF0437E6D088E3EBA45164 /* CheatsView.swift */; };
 		671BE8249D6673AF28E8B30B /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1964EC2638778DCA24B70A0 /* GameView.swift */; };
 		845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */; };
 		8717441798175369FF9535C9 /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C844BCC9AC213AAC925FCA /* GameScreen.swift */; };
@@ -29,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00EF0437E6D088E3EBA45164 /* CheatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatsView.swift; sourceTree = "<group>"; };
 		20171E61B9ED169F56792B98 /* EmulatorCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorCore.swift; sourceTree = "<group>"; };
 		2F03F207068E0070CCFAF518 /* ConsoleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleType.swift; sourceTree = "<group>"; };
 		37C844BCC9AC213AAC925FCA /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
@@ -47,6 +50,7 @@
 		A689816221F264BD33821B40 /* CrystalBoy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CrystalBoy-Bridging-Header.h"; sourceTree = "<group>"; };
 		AEEE8FCD6954599C522016AE /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalBoyApp.swift; sourceTree = "<group>"; };
+		C0A2207E0AC9626CD10669B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C65E8FBFBBDC07F16F71F2E3 /* ControlsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsSettingsView.swift; sourceTree = "<group>"; };
 		DC0D2E0F1F5BB89729BAFB2F /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E1964EC2638778DCA24B70A0 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 				2AB2B0C86FFCBFD2E57AAB9F /* Input */,
 				916A3EAD19E5DE9051915E7E /* Library */,
 				2E63C39BF02D81FA80EE03DF /* Rendering */,
+				A8678B94BD5345F8CE9BC170 /* Resources */,
 				2F81A00D7C40C4635EB5342E /* Save */,
 				369394399F6F96C468737B3E /* Settings */,
 			);
@@ -170,10 +175,19 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
+		A8678B94BD5345F8CE9BC170 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C0A2207E0AC9626CD10669B7 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		AE732DB6929010A440FAA4AA /* Features */ = {
 			isa = PBXGroup;
 			children = (
 				8577785D2A870F9357F45AFF /* CheatManager.swift */,
+				00EF0437E6D088E3EBA45164 /* CheatsView.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -196,6 +210,7 @@
 			buildConfigurationList = 5B8BE850F3340D76F5A679F2 /* Build configuration list for PBXNativeTarget "CrystalBoy" */;
 			buildPhases = (
 				BBCA86D0D86E2A2AA917A961 /* Sources */,
+				C855BE68F307E161C232FD63 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -238,6 +253,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		C855BE68F307E161C232FD63 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C34A8B560A4918E65B69023 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BBCA86D0D86E2A2AA917A961 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -246,6 +272,7 @@
 				E23A7BA68C88FDA190C84304 /* AppState.swift in Sources */,
 				1593CFE374A1C2D183377D93 /* AudioEngine.swift in Sources */,
 				B1EFC7C253D12208B49943B1 /* CheatManager.swift in Sources */,
+				6405EE8835824C396B0576BB /* CheatsView.swift in Sources */,
 				90B1A9658F640E3D4895BED8 /* ConsoleType.swift in Sources */,
 				E8AA6DF646E16177C369F2C6 /* ControlsSettingsView.swift in Sources */,
 				845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */,
