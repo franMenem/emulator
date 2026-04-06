@@ -1,7 +1,30 @@
 import Foundation
 
-enum GameButton: Int {
+enum GameButton: Int, CaseIterable {
+    // Shared (all consoles)
     case right = 0, left, up, down, a, b, select, start
+    // GBA / SNES / Genesis shoulder buttons
+    case l, r
+    // SNES face buttons
+    case x, y
+    // Genesis 6-button extras
+    case genesisC, genesisX, genesisY, genesisZ
+
+    /// Buttons used by a given console type
+    static func buttons(for console: ConsoleType) -> [GameButton] {
+        switch console {
+        case .gb, .gbc:
+            return [.up, .down, .left, .right, .a, .b, .select, .start]
+        case .gba:
+            return [.up, .down, .left, .right, .a, .b, .l, .r, .select, .start]
+        case .nes:
+            return [.up, .down, .left, .right, .a, .b, .select, .start]
+        case .snes:
+            return [.up, .down, .left, .right, .a, .b, .x, .y, .l, .r, .select, .start]
+        case .genesis:
+            return [.up, .down, .left, .right, .a, .b, .genesisC, .genesisX, .genesisY, .genesisZ, .start]
+        }
+    }
 }
 
 protocol EmulatorCore: AnyObject {
