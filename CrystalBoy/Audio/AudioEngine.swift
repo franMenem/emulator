@@ -11,9 +11,12 @@ final class AudioEngine {
     private var readIndex = 0
     private let lock = OSAllocatedUnfairLock()
     private var _muted = false
+    private var _volume: Float = 1.0
+    private let volumeDefaultsKey = "CrystalBoy.Volume"
 
     init() {
-        ringBuffer = [Float](repeating: 0, count: bufferSize * 2) // stereo
+        ringBuffer = [Float](repeating: 0, count: bufferSize * 2)
+        _volume = UserDefaults.standard.object(forKey: volumeDefaultsKey) as? Float ?? 1.0
     }
 
     func start() {
@@ -59,6 +62,7 @@ final class AudioEngine {
 
         do {
             try engine.start()
+            engine.mainMixerNode.outputVolume = _muted ? 0 : _volume
         } catch {
             print("AudioEngine failed to start: \(error)")
         }
@@ -68,10 +72,36 @@ final class AudioEngine {
         engine.stop()
     }
 
-    func setMuted(_ muted: Bool) {
+    var volume: Float {
         lock.lock()
-        _muted = muted
+        let v = _volume
         lock.unlock()
+        return v
+    }
+
+    var isMuted: Bool {
+        lock.lock()
+        let m = _muted
+        lock.unlock()
+        return m
+    }
+
+    func setVolume(_ volume: Float) {
+        let clamped = max(0.0, min(1.0, volume))
+        lock.lock()
+        _volume = clamped
+        lock.unlock()
+        engine.mainMixerNode.outputVolume = _muted ? 0 : clamped
+        UserDefaults.standard.set(clamped, forKey: volumeDefaultsKey)
+    }
+
+    func toggleMute() {
+        lock.lock()
+        _muted.toggle()
+        let muted = _muted
+        let vol = _volume
+        lock.unlock()
+        engine.mainMixerNode.outputVolume = muted ? 0 : vol
     }
 
     /// Called from emulation thread with each audio sample pair
