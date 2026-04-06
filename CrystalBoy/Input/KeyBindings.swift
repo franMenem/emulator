@@ -4,27 +4,40 @@ enum ActionCategory: String, CaseIterable {
     case gameButtons = "Game Buttons"
     case saveLoad = "Save & Load"
     case speed = "Speed"
+    case volume = "Volume"
     case emulator = "Emulator"
 }
 
 enum EmulatorAction: String, CaseIterable, Codable {
-    // Game buttons
+    // Game buttons — shared
     case up, down, left, right, a, b, start, select
+    // Game buttons — GBA/SNES
+    case buttonL, buttonR
+    // Game buttons — SNES
+    case buttonX, buttonY
+    // Game buttons — Genesis
+    case genesisC, genesisX, genesisY, genesisZ
     // Save/Load
     case saveState, loadState, prevSlot, nextSlot
     // Speed
     case rewind, fastForward, speedUp, speedDown, speedReset
+    // Volume
+    case volumeUp, volumeDown, mute
     // Emulator
     case pause, toggleCheats, showHelp, backToLibrary
 
     var category: ActionCategory {
         switch self {
-        case .up, .down, .left, .right, .a, .b, .start, .select:
+        case .up, .down, .left, .right, .a, .b, .start, .select,
+             .buttonL, .buttonR, .buttonX, .buttonY,
+             .genesisC, .genesisX, .genesisY, .genesisZ:
             return .gameButtons
         case .saveState, .loadState, .prevSlot, .nextSlot:
             return .saveLoad
         case .rewind, .fastForward, .speedUp, .speedDown, .speedReset:
             return .speed
+        case .volumeUp, .volumeDown, .mute:
+            return .volume
         case .pause, .toggleCheats, .showHelp, .backToLibrary:
             return .emulator
         }
@@ -40,6 +53,14 @@ enum EmulatorAction: String, CaseIterable, Codable {
         case .b: return .b
         case .start: return .start
         case .select: return .select
+        case .buttonL: return .l
+        case .buttonR: return .r
+        case .buttonX: return .x
+        case .buttonY: return .y
+        case .genesisC: return .genesisC
+        case .genesisX: return .genesisX
+        case .genesisY: return .genesisY
+        case .genesisZ: return .genesisZ
         default: return nil
         }
     }
@@ -66,6 +87,17 @@ enum EmulatorAction: String, CaseIterable, Codable {
         case .toggleCheats: return UInt16(kVK_F9)
         case .pause: return UInt16(kVK_Space)
         case .showHelp: return UInt16(kVK_ANSI_H)
+        case .buttonL: return UInt16(kVK_ANSI_A)
+        case .buttonR: return UInt16(kVK_ANSI_S)
+        case .buttonX: return UInt16(kVK_ANSI_D)
+        case .buttonY: return UInt16(kVK_ANSI_C)
+        case .genesisC: return UInt16(kVK_ANSI_C)
+        case .genesisX: return UInt16(kVK_ANSI_D)
+        case .genesisY: return UInt16(kVK_ANSI_F)
+        case .genesisZ: return UInt16(kVK_ANSI_V)
+        case .volumeUp: return UInt16(kVK_ANSI_RightBracket)
+        case .volumeDown: return UInt16(kVK_ANSI_LeftBracket)
+        case .mute: return UInt16(kVK_ANSI_M)
         case .backToLibrary: return UInt16(kVK_Escape)
         }
     }
@@ -92,12 +124,33 @@ enum EmulatorAction: String, CaseIterable, Codable {
         case .pause: return "Pause"
         case .toggleCheats: return "Toggle Cheats"
         case .showHelp: return "Show Controls (hold)"
+        case .buttonL: return "Button L"
+        case .buttonR: return "Button R"
+        case .buttonX: return "Button X"
+        case .buttonY: return "Button Y"
+        case .genesisC: return "Button C"
+        case .genesisX: return "Button X"
+        case .genesisY: return "Button Y"
+        case .genesisZ: return "Button Z"
+        case .volumeUp: return "Volume Up"
+        case .volumeDown: return "Volume Down"
+        case .mute: return "Mute"
         case .backToLibrary: return "Back to Library"
         }
     }
 
     static func actions(for category: ActionCategory) -> [EmulatorAction] {
         allCases.filter { $0.category == category }
+    }
+
+    static func actions(for console: ConsoleType, category: ActionCategory) -> [EmulatorAction] {
+        let all = actions(for: category)
+        guard category == .gameButtons else { return all }
+        let consoleButtons = GameButton.buttons(for: console)
+        return all.filter { action in
+            guard let button = action.gameButton else { return false }
+            return consoleButtons.contains(button)
+        }
     }
 
     var defaultKeyName: String {
@@ -122,6 +175,17 @@ enum EmulatorAction: String, CaseIterable, Codable {
         case .pause: return "Space"
         case .toggleCheats: return "F9"
         case .showHelp: return "H"
+        case .buttonL: return "A"
+        case .buttonR: return "S"
+        case .buttonX: return "D"
+        case .buttonY: return "C"
+        case .genesisC: return "C"
+        case .genesisX: return "D"
+        case .genesisY: return "F"
+        case .genesisZ: return "V"
+        case .volumeUp: return "]"
+        case .volumeDown: return "["
+        case .mute: return "M"
         case .backToLibrary: return "Esc"
         }
     }
