@@ -88,7 +88,7 @@ struct GameBoyShell: View {
                         .allowsHitTesting(false)
                     }
                 }
-                .aspectRatio(CGFloat(160) / CGFloat(144), contentMode: .fit)
+                .aspectRatio(CGFloat(renderer.screenWidth) / CGFloat(max(1, renderer.screenHeight)), contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 4))
                 .padding(.horizontal, 10)
                 .padding(.bottom, 8)

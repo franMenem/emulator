@@ -5,24 +5,21 @@ import SwiftUI
 @MainActor
 final class FrameRenderer: ObservableObject {
     @Published var currentFrame: CGImage?
+    @Published var screenWidth: Int = 160
+    @Published var screenHeight: Int = 144
 
-    private let gbWidth = 160
-    private let gbHeight = 144
-    private let colorSpace = CGColorSpaceCreateDeviceRGB()
-    private let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
-
-    nonisolated func updateFrame(pixels: UnsafePointer<UInt32>) {
-        let byteCount = 160 * 144 * 4
+    nonisolated func updateFrame(pixels: UnsafePointer<UInt32>, width: Int, height: Int) {
+        let byteCount = width * height * 4
         let data = Data(bytes: pixels, count: byteCount)
 
         guard let provider = CGDataProvider(data: data as CFData) else { return }
 
         let image = CGImage(
-            width: 160,
-            height: 144,
+            width: width,
+            height: height,
             bitsPerComponent: 8,
             bitsPerPixel: 32,
-            bytesPerRow: 160 * 4,
+            bytesPerRow: width * 4,
             space: CGColorSpaceCreateDeviceRGB(),
             bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue),
             provider: provider,
@@ -35,6 +32,8 @@ final class FrameRenderer: ObservableObject {
 
         DispatchQueue.main.async { [weak self] in
             self?.currentFrame = image
+            self?.screenWidth = width
+            self?.screenHeight = height
         }
     }
 }
@@ -42,15 +41,20 @@ final class FrameRenderer: ObservableObject {
 struct GameView: View {
     @ObservedObject var renderer: FrameRenderer
 
+    private var aspectRatio: CGFloat {
+        guard renderer.screenHeight > 0 else { return 10.0 / 9.0 }
+        return CGFloat(renderer.screenWidth) / CGFloat(renderer.screenHeight)
+    }
+
     var body: some View {
         if let cgImage = renderer.currentFrame {
             Image(decorative: cgImage, scale: 1.0)
                 .interpolation(.none)
                 .resizable()
-                .aspectRatio(CGFloat(160) / CGFloat(144), contentMode: .fit)
+                .aspectRatio(aspectRatio, contentMode: .fit)
         } else {
             Color.black
-                .aspectRatio(CGFloat(160) / CGFloat(144), contentMode: .fit)
+                .aspectRatio(aspectRatio, contentMode: .fit)
         }
     }
 }

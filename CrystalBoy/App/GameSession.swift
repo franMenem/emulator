@@ -45,8 +45,10 @@ final class GameSession: ObservableObject {
 
         // Video
         let renderer = self.renderer
+        let width = emu.screenWidth
+        let height = emu.screenHeight
         emu.setVideoCallback { pixels in
-            renderer.updateFrame(pixels: pixels)
+            renderer.updateFrame(pixels: pixels, width: width, height: height)
         }
 
         // Rewind
