@@ -123,9 +123,20 @@ CrystalBoy/Core/
   <CoreName>Emulator.swift
 ```
 
-## Dynamic Aspect Ratio
+## Dynamic Aspect Ratio and Window Sizing
 
 `GameView` reads `EmulatorCore.screenWidth/screenHeight` to set the correct aspect ratio per console. The window adapts when switching between games of different consoles.
+
+Default window size uses 3x multiplier based on core resolution:
+- GB/GBC: 480x432 (160x144 × 3) — current behavior
+- GBA: 720x480 (240x160 × 3)
+- NES: 768x720 (256x240 × 3)
+- SNES: 768x672 (256x224 × 3)
+- Genesis: 960x672 (320x224 × 3)
+
+## Core Availability
+
+`LibraryManager` only scans extensions for cores that are actually compiled and available. A simple check: if `lib<corename>.a` is bundled in the app, that console's extensions are included in the scan. ROMs for unavailable cores don't appear in the library — no disabled/grayed-out states needed.
 
 ## Implementation Order
 
