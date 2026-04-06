@@ -15,7 +15,7 @@ enum ConsoleType: String, CaseIterable {
     case gb, gbc, gba, nes, snes, genesis
 
     var displayName: String { ... }  // "Game Boy", "GBA", etc.
-    var extensions: [String] { ... } // ["gb"], ["gbc"], ["gba"], ["nes"], ["sfc", "smc"], ["md", "bin", "gen"]
+    var extensions: [String] { ... } // ["gb"], ["gbc"], ["gba"], ["nes"], ["sfc", "smc"], ["md", "gen"]
     var badgeColor: Color { ... }    // Distinct color per console
 }
 ```
@@ -23,6 +23,25 @@ enum ConsoleType: String, CaseIterable {
 - `ROMItem` gains `consoleType: ConsoleType` replacing `isColor: Bool`. Determined by file extension.
 - `GameSession.startGame()` uses `consoleType` to instantiate the correct core via a simple switch.
 - `LibraryManager.scan()` expands to scan all supported extensions.
+
+## Input System — GameButton Expansion
+
+The current `GameButton` enum only has 8 Game Boy buttons. It must be expanded to support all consoles:
+
+```swift
+enum GameButton: Int {
+    // Shared (all consoles)
+    case right = 0, left, up, down, a, b, select, start
+    // GBA / SNES
+    case l, r
+    // SNES
+    case x, y
+    // Genesis (6-button)
+    case genesisC, genesisX, genesisY, genesisZ
+}
+```
+
+Each core only uses the buttons it needs — unused buttons are simply ignored. `InputManager` and `KeyBindings` are updated to show only the relevant buttons for the active console's configuration screen. Default keyboard/gamepad mappings are defined per `ConsoleType`.
 
 ## Volume Control
 
@@ -87,7 +106,7 @@ Each core follows the same pattern as SameBoy: compile as static lib → C bridg
 - **Repo:** https://github.com/ekeeke/Genesis-Plus-GX (permissive)
 - **Build:** Makefile → `libgenesis.a`
 - **Resolution:** 320x224
-- **Extensions:** `.md`, `.bin`, `.gen`
+- **Extensions:** `.md`, `.gen` (`.bin` excluded — too ambiguous across systems)
 - **Cheats:** Game Genie (Genesis), Pro Action Replay
 
 ### File Structure Per Core
@@ -112,11 +131,13 @@ CrystalBoy/Core/
 
 ### Phase 0 — Shared Infrastructure
 1. `ConsoleType` enum + `ROMItem` refactor
-2. Volume control in `AudioEngine` + UI (slider, keys, mute)
-3. Console filter buttons in `LibraryView`
-4. `GameSession` refactored to instantiate cores by type
-5. `GameView` dynamic aspect ratio
-6. `LibraryManager.scan()` updated for all extensions
+2. `GameButton` expansion + `InputManager`/`KeyBindings` per-console mappings
+3. Volume control in `AudioEngine` + UI (slider, keys, mute)
+4. Console filter buttons in `LibraryView`
+5. `GameSession` refactored to instantiate cores by type
+6. `GameView` dynamic aspect ratio
+7. `LibraryManager.scan()` updated for all extensions
+8. App icon
 
 ### Phase 1 — GBA (mGBA)
 Compile mGBA → C bridge → `MGBAEmulator.swift` → test
@@ -130,10 +151,15 @@ Compile Snes9x → C bridge → `Snes9xEmulator.swift` → test
 ### Phase 4 — Genesis (Genesis Plus GX)
 Compile Genesis Plus GX → C bridge → `GenesisEmulator.swift` → test
 
+## App Icon
+
+Add a custom app icon to `Assets.xcassets`. Design: a crystal/gem shape with a retro pixel aesthetic, representing the multi-console nature of the app. Single 1024x1024 PNG source — Xcode generates all required sizes automatically.
+
 ## What Doesn't Change
 
 - Save states, battery saves, rewind, cheats — work through `EmulatorCore` protocol
-- `InputManager`, `SaveManager`, `CheatManager` — untouched, depend on protocol
+- `InputManager` — updated for expanded `GameButton` but same architecture
+- `SaveManager`, `CheatManager` — untouched, depend on protocol
 - App name remains "CrystalBoy"
 
 ## Risks
@@ -144,3 +170,5 @@ Compile Genesis Plus GX → C bridge → `GenesisEmulator.swift` → test
 | Snes9x non-commercial license | Ok for personal use, don't publish to App Store |
 | A core doesn't compile cleanly on arm64-macos | Each core has alternatives (e.g., FCEUX instead of Nestopia) |
 | `.md` extension conflicts with Markdown files | Only scanned within ROM folder, not a problem |
+| Nestopia UE repo has low maintenance activity | Fallback to FCEUX if compilation issues arise |
+| Different audio sample rates per core | `setSampleRate` already in protocol, each bridge must implement it |
