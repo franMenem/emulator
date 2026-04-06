@@ -41,7 +41,8 @@ final class GameSession: ObservableObject {
 
         // Audio
         let audio = AudioEngine()
-        audio.start()
+        let audioRate: Double = rom.consoleType == .gba ? 32768 : 48000
+        audio.start(sampleRate: audioRate)
         emu.setSampleRate(audio.currentSampleRate)
         emu.setAudioCallback { [weak audio] left, right in
             audio?.pushSample(left: left, right: right)

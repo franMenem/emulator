@@ -4,7 +4,7 @@ import os
 final class AudioEngine {
     private let engine = AVAudioEngine()
     private var sourceNode: AVAudioSourceNode?
-    private let sampleRate: Double = 48000
+    private var sampleRate: Double = 48000
     private let bufferSize = 4096
     private var ringBuffer: [Float] = []
     private var writeIndex = 0
@@ -19,7 +19,8 @@ final class AudioEngine {
         _volume = UserDefaults.standard.object(forKey: volumeDefaultsKey) as? Float ?? 1.0
     }
 
-    func start() {
+    func start(sampleRate: Double = 48000) {
+        self.sampleRate = sampleRate
         let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 2)!
 
         sourceNode = AVAudioSourceNode(format: format) { [weak self] _, _, frameCount, bufferList -> OSStatus in
