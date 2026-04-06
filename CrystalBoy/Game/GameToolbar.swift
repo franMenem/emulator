@@ -8,6 +8,7 @@ struct GameBoyShell: View {
     var keyBindings: KeyBindings?
     var onBack: () -> Void
     var onSettings: () -> Void
+    var onCheats: () -> Void
 
     private let shellColor = Color(red: 0.45, green: 0.30, blue: 0.65) // GBC purple
     private let shellDark = Color(red: 0.35, green: 0.22, blue: 0.52)
@@ -33,6 +34,14 @@ struct GameBoyShell: View {
                     .tracking(2)
 
                 Spacer()
+
+                Button(action: onCheats) {
+                    Image(systemName: "star.fill")
+                        .font(.system(size: 13))
+                        .foregroundStyle(.white.opacity(0.6))
+                }
+                .buttonStyle(.plain)
+                .help("Cheats")
 
                 Button(action: onSettings) {
                     Image(systemName: "gearshape.fill")

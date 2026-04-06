@@ -6,6 +6,7 @@ struct CrystalBoyApp: App {
     @StateObject private var library = LibraryManager()
     @StateObject private var session = GameSession()
     @State private var showControlsSettings = false
+    @State private var showCheats = false
 
     var body: some Scene {
         Window("CrystalBoy", id: "main") {
@@ -29,6 +30,9 @@ struct CrystalBoyApp: App {
                         },
                         onSettings: {
                             showControlsSettings = true
+                        },
+                        onCheats: {
+                            showCheats = true
                         }
                     )
                 }
@@ -42,6 +46,11 @@ struct CrystalBoyApp: App {
                     ControlsSettingsView(keyBindings: KeyBindings(), consoleType: nil)
                 }
             }
+            .sheet(isPresented: $showCheats) {
+                if let cheats = session.cheatManager {
+                    CheatsView(cheatManager: cheats)
+                }
+            }
         }
         .defaultSize(width: 520, height: 580)
         .commands {
@@ -50,6 +59,11 @@ struct CrystalBoyApp: App {
                     showControlsSettings = true
                 }
                 .keyboardShortcut(",", modifiers: .command)
+
+                Button("Cheats...") {
+                    showCheats = true
+                }
+                .keyboardShortcut("k", modifiers: .command)
             }
         }
     }

@@ -7,6 +7,7 @@ struct GameScreen: View {
     var keyBindings: KeyBindings?
     var onBack: () -> Void
     var onSettings: () -> Void
+    var onCheats: () -> Void
 
     var body: some View {
         GameBoyShell(
@@ -15,7 +16,8 @@ struct GameScreen: View {
             toolbarState: toolbarState,
             keyBindings: keyBindings,
             onBack: onBack,
-            onSettings: onSettings
+            onSettings: onSettings,
+            onCheats: onCheats
         )
         .padding(12)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
