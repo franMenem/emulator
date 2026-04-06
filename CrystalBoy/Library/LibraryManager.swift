@@ -5,18 +5,22 @@ struct ROMItem: Identifiable {
     let id = UUID()
     let url: URL
     let name: String
-    let isColor: Bool // .gbc vs .gb
+    let consoleType: ConsoleType
 
     init(url: URL) {
         self.url = url
         self.name = url.deletingPathExtension().lastPathComponent
-        self.isColor = url.pathExtension.lowercased() == "gbc"
+        self.consoleType = ConsoleType.from(extension: url.pathExtension) ?? .gb
     }
+
+    /// Convenience for backward compat — true if GBC
+    var isColor: Bool { consoleType == .gbc }
 }
 
 final class LibraryManager: ObservableObject {
     @Published var roms: [ROMItem] = []
     @Published var folderURL: URL?
+    @Published var selectedFilter: ConsoleType?
 
     private let defaultsKey = "CrystalBoy.ROMFolder"
     private var accessedURL: URL?
@@ -65,10 +69,22 @@ final class LibraryManager: ObservableObject {
             at: folderURL, includingPropertiesForKeys: nil
         ) else { return }
 
+        // Only scan extensions for cores that are actually available
         roms = contents
-            .filter { ["gb", "gbc"].contains($0.pathExtension.lowercased()) }
+            .filter { ConsoleType.availableExtensions.contains($0.pathExtension.lowercased()) }
             .map { ROMItem(url: $0) }
             .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+    }
+
+    var filteredROMs: [ROMItem] {
+        guard let filter = selectedFilter else { return roms }
+        return roms.filter { $0.consoleType == filter }
+    }
+
+    /// Console types that have at least one ROM
+    var availableConsoleTypes: [ConsoleType] {
+        let types = Set(roms.map { $0.consoleType })
+        return ConsoleType.allCases.filter { types.contains($0) }
     }
 
     /// Import a .sav file for a given ROM. Copies it next to the ROM with matching name.
