@@ -105,6 +105,12 @@ final class GameSession: ObservableObject {
                 self?.toolbarState.speed = speed
             }
         }
+        input.onVolumeChange = { [weak self] volume, muted in
+            Task { @MainActor in
+                self?.toolbarState.volume = volume
+                self?.toolbarState.isMuted = muted
+            }
+        }
         input.onPause = { [weak self] in
             guard let self else { return }
             Task { @MainActor in
@@ -122,6 +128,21 @@ final class GameSession: ObservableObject {
         toolbarState.isPaused = false
         toolbarState.speed = 1.0
         toolbarState.currentSlot = 0
+
+        toolbarState.volume = audio.volume
+        toolbarState.isMuted = audio.isMuted
+
+        toolbarState.onVolumeChanged = { [weak audio] vol in
+            audio?.setVolume(vol)
+        }
+        toolbarState.onToggleMute = { [weak self, weak audio] in
+            audio?.toggleMute()
+            if let audio {
+                Task { @MainActor in
+                    self?.toolbarState.isMuted = audio.isMuted
+                }
+            }
+        }
 
         toolbarState.onTogglePause = { [weak self] in
             self?.togglePause(thread: thread, appState: appState)
