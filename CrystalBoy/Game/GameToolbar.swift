@@ -160,6 +160,25 @@ struct GameBoyShell: View {
                         .buttonStyle(.plain)
                         .foregroundStyle(.cyan.opacity(0.7))
                     }
+                    // Volume
+                    HStack(spacing: 4) {
+                        Button(action: { toolbarState.onToggleMute?() }) {
+                            Image(systemName: volumeIcon)
+                                .font(.system(size: 10))
+                                .foregroundStyle(toolbarState.isMuted ? .red.opacity(0.6) : .white.opacity(0.4))
+                        }
+                        .buttonStyle(.plain)
+
+                        Text(volumeLabel)
+                            .font(.system(size: 12, weight: .bold, design: .monospaced))
+                            .foregroundStyle(toolbarState.isMuted ? .red.opacity(0.5) : .white.opacity(0.5))
+                    }
+                    Slider(value: $toolbarState.volume, in: 0...1, step: 0.1)
+                        .tint(toolbarState.isMuted ? .red.opacity(0.5) : .green)
+                        .frame(width: 120)
+                        .onChange(of: toolbarState.volume) { _, val in
+                            toolbarState.onVolumeChanged?(val)
+                        }
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -185,6 +204,17 @@ struct GameBoyShell: View {
 
     private var speedLabel: String {
         "\(Int(round(toolbarState.speed * 100)))%"
+    }
+
+    private var volumeIcon: String {
+        if toolbarState.isMuted { return "speaker.slash.fill" }
+        if toolbarState.volume == 0 { return "speaker.fill" }
+        if toolbarState.volume < 0.5 { return "speaker.wave.1.fill" }
+        return "speaker.wave.2.fill"
+    }
+
+    private var volumeLabel: String {
+        toolbarState.isMuted ? "MUTE" : "\(Int(round(toolbarState.volume * 100)))%"
     }
 
     private func shellButton(_ label: String, icon: String, action: @escaping () -> Void) -> some View {
@@ -277,4 +307,10 @@ final class ToolbarState: ObservableObject {
     var onPrevSlot: (() -> Void)?
     var onNextSlot: (() -> Void)?
     var onSpeedChanged: ((Float) -> Void)?
+
+    @Published var volume: Float = 1.0
+    @Published var isMuted = false
+
+    var onVolumeChanged: ((Float) -> Void)?
+    var onToggleMute: (() -> Void)?
 }
