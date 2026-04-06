@@ -17,9 +17,8 @@ final class InputManager {
     var onSpeedChange: ((Float) -> Void)?
     var onShowHelp: ((Bool) -> Void)?
 
-    // Speed steps
-    private let speedSteps: [Float] = [0.25, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0]
-    private var currentSpeedIndex = 2 // 1.0x
+    // Speed: 5% increments, range 25%-400%
+    private var currentSpeed: Float = 1.0
 
     // Hold-state tracking for rewind/fast forward
     private(set) var isRewindActive = false
@@ -75,10 +74,8 @@ final class InputManager {
                 emuThread?.setSpeed(4.0)
                 audioEngine?.setMuted(true)
             } else {
-                // Restore current speed setting
-                let speed = speedSteps[currentSpeedIndex]
-                emuThread?.setSpeed(speed)
-                audioEngine?.setMuted(speed != 1.0)
+                emuThread?.setSpeed(currentSpeed)
+                audioEngine?.setMuted(currentSpeed != 1.0)
             }
         case .saveState:
             if pressed { onSaveState?() }
@@ -95,7 +92,7 @@ final class InputManager {
         case .speedDown:
             if pressed { changeSpeed(delta: -1) }
         case .speedReset:
-            if pressed { setSpeedIndex(2) } // 1.0x
+            if pressed { applySpeed(1.0) }
         case .showHelp:
             onShowHelp?(pressed)
         case .pause:
@@ -108,28 +105,22 @@ final class InputManager {
     }
 
     private func changeSpeed(delta: Int) {
-        setSpeedIndex(currentSpeedIndex + delta)
+        let step: Float = 0.05 // 5%
+        let newSpeed = currentSpeed + Float(delta) * step
+        applySpeed(max(0.25, min(4.0, newSpeed)))
     }
 
-    private func setSpeedIndex(_ index: Int) {
-        currentSpeedIndex = max(0, min(speedSteps.count - 1, index))
-        let speed = speedSteps[currentSpeedIndex]
-        emuThread?.setSpeed(speed)
-        audioEngine?.setMuted(speed != 1.0)
-        onSpeedChange?(speed)
+    private func applySpeed(_ speed: Float) {
+        // Round to nearest 5%
+        currentSpeed = (speed * 20).rounded() / 20
+        emuThread?.setSpeed(currentSpeed)
+        audioEngine?.setMuted(currentSpeed != 1.0)
+        onSpeedChange?(currentSpeed)
     }
 
     /// Called when the toolbar slider changes speed directly
     func setSpeedFromSlider(_ speed: Float) {
-        // Find the closest speed step index for keyboard +/- to work from
-        if let idx = speedSteps.firstIndex(where: { abs($0 - speed) < 0.01 }) {
-            currentSpeedIndex = idx
-        } else {
-            // Custom value from slider — find nearest step
-            currentSpeedIndex = speedSteps.enumerated().min(by: {
-                abs($0.element - speed) < abs($1.element - speed)
-            })?.offset ?? 2
-        }
+        currentSpeed = (speed * 20).rounded() / 20
     }
 
     // MARK: - Gamepad

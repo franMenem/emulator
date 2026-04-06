@@ -135,7 +135,7 @@ struct GameBoyShell: View {
                 }
                 .buttonStyle(.plain)
 
-                // Right: Speed
+                // Right: Speed (percentage based, 5% steps)
                 VStack(spacing: 4) {
                     HStack(spacing: 4) {
                         Image(systemName: "gauge.medium")
@@ -145,14 +145,14 @@ struct GameBoyShell: View {
                             .font(.system(size: 12, weight: .bold, design: .monospaced))
                             .foregroundStyle(toolbarState.speed == 1.0 ? .white.opacity(0.5) : .cyan)
                     }
-                    Slider(value: $toolbarState.speed, in: 0.25...4.0, step: 0.25)
+                    Slider(value: $toolbarState.speed, in: 0.25...4.0, step: 0.05)
                         .tint(.cyan)
-                        .frame(width: 100)
+                        .frame(width: 120)
                         .onChange(of: toolbarState.speed) { _, val in
                             toolbarState.onSpeedChanged?(val)
                         }
                     if toolbarState.speed != 1.0 {
-                        Button("Reset") {
+                        Button("Reset to 100%") {
                             toolbarState.speed = 1.0
                             toolbarState.onSpeedChanged?(1.0)
                         }
@@ -184,8 +184,7 @@ struct GameBoyShell: View {
     }
 
     private var speedLabel: String {
-        let s = toolbarState.speed
-        return s == Float(Int(s)) ? "\(Int(s))x" : String(format: "%.1fx", s)
+        "\(Int(round(toolbarState.speed * 100)))%"
     }
 
     private func shellButton(_ label: String, icon: String, action: @escaping () -> Void) -> some View {
