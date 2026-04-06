@@ -108,12 +108,25 @@ enum ConsoleType: String, CaseIterable, Codable {
 }
 ```
 
-- [ ] **Step 2: Verify it compiles**
+- [ ] **Step 2: Add file to Xcode project**
+
+The new file must be included in the CrystalBoy target. Check if the project uses folder references (auto-includes new files) or group references (requires manual add):
+
+```bash
+# If this returns 0, the file is NOT in the project and must be added
+grep -c "ConsoleType" CrystalBoy.xcodeproj/project.pbxproj
+```
+
+If not found: open Xcode, right-click the `Core/` group → "Add Files to CrystalBoy" → select `ConsoleType.swift` → ensure "Add to targets: CrystalBoy" is checked. Alternatively, if the project uses folder references, the file is picked up automatically.
+
+**Note:** This applies to ALL new files created in this plan. Any new `.swift` file must be verified as part of the Xcode target.
+
+- [ ] **Step 3: Verify it compiles**
 
 Run: `cd /Users/efmenem/Projects/CrystalBoy && xcodebuild -scheme CrystalBoy -destination 'platform=macOS' build 2>&1 | tail -5`
-Expected: BUILD SUCCEEDED
+Expected: BUILD SUCCEEDED. If it fails with "cannot find type 'ConsoleType'", the file is not in the target — see Step 2.
 
-- [ ] **Step 3: Commit**
+- [ ] **Step 4: Commit**
 
 ```bash
 git add CrystalBoy/Core/ConsoleType.swift
