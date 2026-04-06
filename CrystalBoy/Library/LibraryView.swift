@@ -31,27 +31,52 @@ struct LibraryView: View {
             .padding()
             .background(Color(white: 0.1))
 
+            // Filter pills
+            if !library.availableConsoleTypes.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 6) {
+                        filterPill(label: "All", isActive: library.selectedFilter == nil) {
+                            library.selectedFilter = nil
+                        }
+                        ForEach(library.availableConsoleTypes, id: \.self) { console in
+                            filterPill(
+                                label: console.displayName,
+                                isActive: library.selectedFilter == console
+                            ) {
+                                library.selectedFilter = console
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                }
+                .background(Color(white: 0.1))
+            }
+
             // ROM list
-            if library.roms.isEmpty {
+            if library.filteredROMs.isEmpty {
                 Spacer()
                 if library.folderURL == nil {
                     Text("Select a folder with your ROMs")
                         .foregroundStyle(.gray)
+                } else if library.selectedFilter != nil {
+                    Text("No \(library.selectedFilter!.displayName) ROMs found")
+                        .foregroundStyle(.gray)
                 } else {
-                    Text("No .gb or .gbc files found")
+                    Text("No ROMs found")
                         .foregroundStyle(.gray)
                 }
                 Spacer()
             } else {
-                List(library.roms) { rom in
+                List(library.filteredROMs) { rom in
                     HStack {
-                        Text(rom.isColor ? "GBC" : "GB")
+                        Text(rom.consoleType.displayName)
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundStyle(.black)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
-                            .background(rom.isColor ? Color.purple : Color.gray)
+                            .background(rom.consoleType.badgeColor)
                             .cornerRadius(4)
                         Text(rom.name)
                             .foregroundStyle(.white)
@@ -94,6 +119,19 @@ struct LibraryView: View {
             .background(Color(white: 0.1))
         }
         .background(Color(white: 0.08))
+    }
+
+    private func filterPill(label: String, isActive: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(label)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(isActive ? .black : .gray)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 4)
+                .background(isActive ? Color.white : Color(white: 0.2))
+                .cornerRadius(12)
+        }
+        .buttonStyle(.plain)
     }
 
     private func hasSaveFile(for rom: ROMItem) -> Bool {
