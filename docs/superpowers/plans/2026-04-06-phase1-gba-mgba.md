@@ -62,7 +62,7 @@ OUTPUT_DIR="$SCRIPT_DIR"
 
 # Clone mGBA if not present
 if [ ! -d "$MGBA_DIR" ]; then
-    git clone --depth 1 --branch 0.10.4 https://github.com/mgba-emu/mgba.git "$MGBA_DIR"
+    git clone --depth 1 --branch 0.10.3 https://github.com/mgba-emu/mgba.git "$MGBA_DIR"
 fi
 
 # Build as static library (core only, no frontends, no deps)
@@ -125,14 +125,83 @@ The `libmgba.a` and `include/` should be committed (same pattern as SameBoyCore)
 
 ```bash
 git add MGBACore/build.sh MGBACore/libmgba.a MGBACore/include/ .gitignore
-git commit -m "feat: compile mGBA 0.10.4 as static library for arm64-macos"
+git commit -m "feat: compile mGBA 0.10.3 as static library for arm64-macos"
 ```
 
 Note: `libmgba.a` is a binary — this will be a large commit. That's expected and matches the SameBoy pattern.
 
 ---
 
-## Task 2: Write the mGBA C Bridge
+## Task 2: Make AudioEngine Sample Rate Configurable
+
+**Why:** mGBA produces audio at 32768 Hz, but AudioEngine is hardcoded to 48000 Hz. Without this fix, GBA audio will sound ~46% too fast and high-pitched. The fix is minimal: make `sampleRate` a parameter of `start()` instead of a hardcoded constant.
+
+**Files:**
+- Modify: `CrystalBoy/Audio/AudioEngine.swift`
+- Modify: `CrystalBoy/App/GameSession.swift`
+
+- [ ] **Step 1: Make sampleRate configurable in AudioEngine**
+
+In `AudioEngine.swift`, change the sampleRate property from a constant to a stored property:
+
+Replace:
+```swift
+    private let sampleRate: Double = 48000
+```
+With:
+```swift
+    private var sampleRate: Double = 48000
+```
+
+Change `start()` to accept a sample rate parameter:
+
+Replace:
+```swift
+    func start() {
+```
+With:
+```swift
+    func start(sampleRate: Double = 48000) {
+        self.sampleRate = sampleRate
+```
+
+- [ ] **Step 2: Pass core sample rate from GameSession**
+
+In `GameSession.startGame()`, the audio setup currently does:
+```swift
+        let audio = AudioEngine()
+        audio.start()
+        emu.setSampleRate(audio.currentSampleRate)
+```
+
+Change to:
+```swift
+        let audio = AudioEngine()
+        // mGBA produces at 32768 Hz, SameBoy at 48000 Hz
+        // Use 32768 for GBA, 48000 for everything else
+        let audioRate: Double = rom.consoleType == .gba ? 32768 : 48000
+        audio.start(sampleRate: audioRate)
+        emu.setSampleRate(audio.currentSampleRate)
+```
+
+- [ ] **Step 3: Verify it compiles and GB still works**
+
+```bash
+cd /Users/efmenem/Projects/CrystalBoy && xcodebuild -scheme CrystalBoy -destination 'platform=macOS' build 2>&1 | tail -20
+```
+
+Test a GB/GBC game to make sure audio still sounds correct (default 48000 Hz is unchanged for GB).
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add CrystalBoy/Audio/AudioEngine.swift CrystalBoy/App/GameSession.swift
+git commit -m "feat: make AudioEngine sample rate configurable for multi-core support"
+```
+
+---
+
+## Task 3: Write the mGBA C Bridge
 
 **Why:** Swift can't call mGBA's C API directly (it's a vtable struct). We need a thin C wrapper like SameBoyBridge.
 
@@ -208,6 +277,7 @@ unsigned int mgba_get_screen_height(MGBAContext *ctx);
 #include <mgba-util/audio-buffer.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
 
 #define GBA_WIDTH 240
 #define GBA_HEIGHT 160
@@ -381,8 +451,7 @@ unsigned int mgba_get_screen_height(MGBAContext *ctx) {
 
 **IMPORTANT NOTES for the implementer:**
 - The `color_t` type may be defined differently in mGBA headers — check `mgba-util/image.h`. If it's not `uint32_t`, cast accordingly.
-- The `O_RDONLY`, `O_WRONLY`, etc. constants need `#include <fcntl.h>`.
-- `mAudioBufferAvailable` and `mAudioBufferRead` are from `mgba-util/audio-buffer.h`.
+- `mAudioBufferAvailable` and `mAudioBufferRead` are from `mgba-util/audio-buffer.h`. If names differ, check actual headers in `MGBACore/include/mgba-util/`.
 - The `SAVESTATE_ALL` flag is from `mgba/core/serialize.h`.
 - If any function or type is not found during compilation, check the mGBA headers in `MGBACore/include/` and adjust includes.
 
@@ -406,7 +475,7 @@ git commit -m "feat: add mGBA C bridge for GBA emulation"
 
 ---
 
-## Task 3: Write MGBAEmulator.swift
+## Task 4: Write MGBAEmulator.swift
 
 **Why:** The Swift wrapper that conforms to `EmulatorCore`, following the exact same pattern as `SameBoyEmulator.swift`.
 
@@ -580,7 +649,7 @@ git commit -m "feat: add MGBAEmulator.swift conforming to EmulatorCore"
 
 ---
 
-## Task 4: Update Project Configuration and Activate GBA
+## Task 5: Update Project Configuration and Activate GBA
 
 **Why:** Wire everything together — project.yml, bridging header, ConsoleType, GameSession.
 
@@ -693,7 +762,7 @@ git commit -m "feat: activate GBA emulation via mGBA core"
 
 ---
 
-## Task 5: Final Verification
+## Task 6: Final Verification
 
 - [ ] **Step 1: Clean build**
 
@@ -734,6 +803,6 @@ git commit -m "fix: resolve issues from GBA integration"
 ## Known Limitations (GBA vs GB/GBC)
 
 - **No rewind:** mGBA doesn't have built-in rewind like SameBoy. `setRewindLength` and `rewindPop` are no-ops for GBA.
-- **Audio sample rate:** mGBA outputs at 32768 Hz vs SameBoy's 48000 Hz. The AudioEngine should handle this via `setSampleRate`, but there may be pitch/speed issues if the rates don't match.
+- **Audio sample rate:** mGBA outputs at 32768 Hz vs SameBoy's 48000 Hz. Task 2 makes AudioEngine configurable to handle this. If audio still sounds off, the core may need resampling.
 - **Battery saves:** mGBA handles saves internally via `mCoreAutoloadSave`. The bridge's `save_battery`/`load_battery` use `savedataClone`/`loadSave` which may behave differently than SameBoy's direct file I/O.
 - **Pixel format:** mGBA outputs XBGR8, bridge converts to ARGB for CGImage compatibility. This adds a small per-frame cost (240*160 pixel conversions).
