@@ -3,6 +3,7 @@ import Carbon.HIToolbox
 
 struct ControlsSettingsView: View {
     let keyBindings: KeyBindings
+    var consoleType: ConsoleType?
     @State private var listeningFor: EmulatorAction?
     @State private var keyMonitor: Any?
     @State private var refreshID = UUID()
@@ -67,42 +68,54 @@ struct ControlsSettingsView: View {
         }
     }
 
+    private func actions(for category: ActionCategory) -> [EmulatorAction] {
+        if category == .gameButtons, let console = consoleType {
+            return EmulatorAction.actions(for: console, category: category)
+        } else {
+            return EmulatorAction.actions(for: category)
+        }
+    }
+
     @ViewBuilder
     private func sectionView(for category: ActionCategory) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(category.rawValue)
-                .font(.headline)
-                .foregroundStyle(.secondary)
+        let actions = actions(for: category)
 
-            VStack(spacing: 2) {
-                ForEach(EmulatorAction.actions(for: category), id: \.self) { action in
-                    HStack {
-                        Text(action.displayName)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+        if !actions.isEmpty {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(category.rawValue)
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
 
-                        if listeningFor == action {
-                            Text("Press a key...")
-                                .font(.system(.body, design: .monospaced))
-                                .foregroundStyle(.yellow)
-                                .frame(width: 120, alignment: .trailing)
-                        } else {
-                            Text(keyBindings.keyCode(for: action).map { keyCodeName($0) } ?? "—")
-                                .font(.system(.body, design: .monospaced))
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 2)
-                                .background(Color.white.opacity(0.1))
-                                .cornerRadius(4)
-                                .frame(width: 120, alignment: .trailing)
+                VStack(spacing: 2) {
+                    ForEach(actions, id: \.self) { action in
+                        HStack {
+                            Text(action.displayName)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+
+                            if listeningFor == action {
+                                Text("Press a key...")
+                                    .font(.system(.body, design: .monospaced))
+                                    .foregroundStyle(.yellow)
+                                    .frame(width: 120, alignment: .trailing)
+                            } else {
+                                Text(keyBindings.keyCode(for: action).map { keyCodeName($0) } ?? "—")
+                                    .font(.system(.body, design: .monospaced))
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 2)
+                                    .background(Color.white.opacity(0.1))
+                                    .cornerRadius(4)
+                                    .frame(width: 120, alignment: .trailing)
+                            }
                         }
-                    }
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 8)
-                    .background(listeningFor == action ? Color.blue.opacity(0.2) : Color.clear)
-                    .cornerRadius(4)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        listeningFor = action
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
+                        .background(listeningFor == action ? Color.blue.opacity(0.2) : Color.clear)
+                        .cornerRadius(4)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            listeningFor = action
+                        }
                     }
                 }
             }

@@ -37,9 +37,9 @@ struct CrystalBoyApp: App {
             .background(Color(white: 0.06))
             .sheet(isPresented: $showControlsSettings) {
                 if let bindings = session.inputManager?.keyBindings {
-                    ControlsSettingsView(keyBindings: bindings)
+                    ControlsSettingsView(keyBindings: bindings, consoleType: session.activeConsoleType)
                 } else {
-                    ControlsSettingsView(keyBindings: KeyBindings())
+                    ControlsSettingsView(keyBindings: KeyBindings(), consoleType: nil)
                 }
             }
         }
