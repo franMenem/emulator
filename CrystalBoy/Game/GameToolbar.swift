@@ -261,6 +261,8 @@ struct GameBoyShell: View {
                 VStack(alignment: .leading, spacing: 4) {
                     helpSection("Save & Load", category: .saveLoad)
                     Spacer().frame(height: 8)
+                    helpSection("Volume", category: .volume)
+                    Spacer().frame(height: 8)
                     helpSection("Emulator", category: .emulator)
                 }
             }
