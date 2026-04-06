@@ -87,6 +87,7 @@ final class GameSession: ObservableObject {
         cheats.onToast = { msg in
             Task { @MainActor in appState.showToast(msg) }
         }
+        cheats.setROM(url: rom.url)
 
         // Wire keyboard input actions
         input.onSaveState = { [weak self] in
