@@ -6,6 +6,7 @@ import AppKit
 @MainActor
 final class GameSession: ObservableObject {
     let renderer = FrameRenderer()
+    let toolbarState = ToolbarState()
 
     private(set) var emulator: SameBoyEmulator?
     private(set) var emuThread: EmulationThread?
@@ -25,15 +26,11 @@ final class GameSession: ObservableObject {
         setupNotifications()
     }
 
-    nonisolated deinit {
-        // Notification observers are removed automatically when the object is deallocated
-        // Game cleanup should have been called by the app lifecycle before this point
-    }
+    nonisolated deinit {}
 
     // MARK: - Game Lifecycle
 
     func startGame(rom: ROMItem, appState: AppState) {
-        // Clean up any previous session
         stopGame()
 
         let emu = SameBoyEmulator(isColorGB: rom.isColor)
@@ -85,30 +82,33 @@ final class GameSession: ObservableObject {
             Task { @MainActor in appState.showToast(msg) }
         }
 
-        // Wire input actions
-        input.onSaveState = { saves.saveState() }
+        // Wire keyboard input actions
+        input.onSaveState = { [weak self] in
+            saves.saveState()
+            Task { @MainActor in self?.toolbarState.currentSlot = saves.currentSlotIndex }
+        }
         input.onLoadState = { saves.loadState() }
-        input.onPrevSlot = { saves.prevSlot() }
-        input.onNextSlot = { saves.nextSlot() }
+        input.onPrevSlot = { [weak self] in
+            saves.prevSlot()
+            Task { @MainActor in self?.toolbarState.currentSlot = saves.currentSlotIndex }
+        }
+        input.onNextSlot = { [weak self] in
+            saves.nextSlot()
+            Task { @MainActor in self?.toolbarState.currentSlot = saves.currentSlotIndex }
+        }
         input.onToggleCheats = { cheats.toggleCheats() }
         input.onShowHelp = { show in
             Task { @MainActor in appState.showHelp = show }
         }
-        input.onSpeedChange = { speed in
-            let label = speed == Float(Int(speed)) ? "\(Int(speed))x" : String(format: "%.1fx", speed)
-            Task { @MainActor in appState.showToast("Speed: \(label)") }
+        input.onSpeedChange = { [weak self] speed in
+            Task { @MainActor in
+                self?.toolbarState.speed = speed
+            }
         }
         input.onPause = { [weak self] in
             guard let self else { return }
             Task { @MainActor in
-                self.manuallyPaused.toggle()
-                if self.manuallyPaused {
-                    thread.pause()
-                    appState.showToast("Paused")
-                } else {
-                    thread.resume()
-                    appState.showToast("Resumed")
-                }
+                self.togglePause(thread: thread, appState: appState)
             }
         }
         input.onBackToLibrary = { [weak self] in
@@ -116,6 +116,34 @@ final class GameSession: ObservableObject {
                 self?.stopGame()
                 appState.currentScreen = .library
             }
+        }
+
+        // Wire toolbar button actions
+        toolbarState.isPaused = false
+        toolbarState.speed = 1.0
+        toolbarState.currentSlot = 0
+
+        toolbarState.onTogglePause = { [weak self] in
+            self?.togglePause(thread: thread, appState: appState)
+        }
+        toolbarState.onSave = { [weak self] in
+            saves.saveState()
+            Task { @MainActor in self?.toolbarState.currentSlot = saves.currentSlotIndex }
+        }
+        toolbarState.onLoad = { saves.loadState() }
+        toolbarState.onPrevSlot = { [weak self] in
+            saves.prevSlot()
+            Task { @MainActor in self?.toolbarState.currentSlot = saves.currentSlotIndex }
+        }
+        toolbarState.onNextSlot = { [weak self] in
+            saves.nextSlot()
+            Task { @MainActor in self?.toolbarState.currentSlot = saves.currentSlotIndex }
+        }
+        toolbarState.onSpeedChanged = { [weak self] speed in
+            thread.setSpeed(speed)
+            audio.setMuted(speed != 1.0)
+            // Sync InputManager speed index
+            self?.inputManager?.setSpeedFromSlider(speed)
         }
 
         // Store references
@@ -127,7 +155,7 @@ final class GameSession: ObservableObject {
         self.cheatManager = cheats
         self.manuallyPaused = false
 
-        // Keyboard monitors (stored for cleanup)
+        // Keyboard monitors
         keyDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             input.handleKeyDown(event: event) ? nil : event
         }
@@ -140,14 +168,23 @@ final class GameSession: ObservableObject {
         appState.currentScreen = .game(rom.url)
     }
 
+    private func togglePause(thread: EmulationThread, appState: AppState) {
+        manuallyPaused.toggle()
+        toolbarState.isPaused = manuallyPaused
+        if manuallyPaused {
+            thread.pause()
+            appState.showToast("Paused")
+        } else {
+            thread.resume()
+            appState.showToast("Resumed")
+        }
+    }
+
     func stopGame() {
-        // Remove keyboard monitors first
         if let m = keyDownMonitor { NSEvent.removeMonitor(m); keyDownMonitor = nil }
         if let m = keyUpMonitor { NSEvent.removeMonitor(m); keyUpMonitor = nil }
 
-        // Save before stopping emulation
         saveManager?.cleanup()
-
         emuThread?.stop()
         audioEngine?.stop()
 

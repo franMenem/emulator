@@ -4,7 +4,8 @@ final class SaveManager {
     private let emulator: EmulatorCore
     private weak var emuThread: EmulationThread?
     private var romURL: URL?
-    private var currentSlot: Int = 0
+    private(set) var currentSlot: Int = 0
+    var currentSlotIndex: Int { currentSlot }
     private var autoSaveTimer: Timer?
 
     var onToast: ((String) -> Void)?

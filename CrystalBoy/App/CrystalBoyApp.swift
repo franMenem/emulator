@@ -18,11 +18,23 @@ struct CrystalBoyApp: App {
                         showControlsSettings = true
                     }
                 case .game:
-                    GameScreen(renderer: session.renderer, appState: appState, keyBindings: session.inputManager?.keyBindings)
+                    GameScreen(
+                        renderer: session.renderer,
+                        appState: appState,
+                        toolbarState: session.toolbarState,
+                        keyBindings: session.inputManager?.keyBindings,
+                        onBack: {
+                            session.stopGame()
+                            appState.currentScreen = .library
+                        },
+                        onSettings: {
+                            showControlsSettings = true
+                        }
+                    )
                 }
             }
-            .frame(minWidth: 320, minHeight: 288)
-            .background(Color.black)
+            .frame(minWidth: 400, minHeight: 450)
+            .background(Color(white: 0.06))
             .sheet(isPresented: $showControlsSettings) {
                 if let bindings = session.inputManager?.keyBindings {
                     ControlsSettingsView(keyBindings: bindings)
@@ -31,7 +43,7 @@ struct CrystalBoyApp: App {
                 }
             }
         }
-        .defaultSize(width: 480, height: 432)
+        .defaultSize(width: 520, height: 580)
         .commands {
             CommandGroup(after: .appSettings) {
                 Button("Controls...") {

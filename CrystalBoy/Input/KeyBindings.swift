@@ -99,6 +99,32 @@ enum EmulatorAction: String, CaseIterable, Codable {
     static func actions(for category: ActionCategory) -> [EmulatorAction] {
         allCases.filter { $0.category == category }
     }
+
+    var defaultKeyName: String {
+        switch self {
+        case .up: return "Up"
+        case .down: return "Down"
+        case .left: return "Left"
+        case .right: return "Right"
+        case .a: return "Z"
+        case .b: return "X"
+        case .start: return "Enter"
+        case .select: return "Bksp"
+        case .saveState: return "F5"
+        case .loadState: return "F7"
+        case .prevSlot: return "F2"
+        case .nextSlot: return "F3"
+        case .rewind: return "R"
+        case .fastForward: return "Tab"
+        case .speedUp: return "+"
+        case .speedDown: return "-"
+        case .speedReset: return "0"
+        case .pause: return "Space"
+        case .toggleCheats: return "F9"
+        case .showHelp: return "H"
+        case .backToLibrary: return "Esc"
+        }
+    }
 }
 
 final class KeyBindings {

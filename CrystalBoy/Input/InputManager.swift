@@ -119,6 +119,19 @@ final class InputManager {
         onSpeedChange?(speed)
     }
 
+    /// Called when the toolbar slider changes speed directly
+    func setSpeedFromSlider(_ speed: Float) {
+        // Find the closest speed step index for keyboard +/- to work from
+        if let idx = speedSteps.firstIndex(where: { abs($0 - speed) < 0.01 }) {
+            currentSpeedIndex = idx
+        } else {
+            // Custom value from slider — find nearest step
+            currentSpeedIndex = speedSteps.enumerated().min(by: {
+                abs($0.element - speed) < abs($1.element - speed)
+            })?.offset ?? 2
+        }
+    }
+
     // MARK: - Gamepad
 
     private func setupGamepad() {
