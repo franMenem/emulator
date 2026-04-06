@@ -230,8 +230,10 @@ final class GameSession: ObservableObject {
         switch rom.consoleType {
         case .gb, .gbc:
             return SameBoyEmulator(isColorGB: rom.consoleType == .gbc)
-        case .gba, .nes, .snes, .genesis:
-            return nil  // Core not yet implemented
+        case .gba:
+            return MGBAEmulator()
+        case .nes, .snes, .genesis:
+            return nil
         }
     }
 

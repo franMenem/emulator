@@ -37,7 +37,7 @@ enum ConsoleType: String, CaseIterable, Codable {
     }
 
     /// Console types with compiled cores available. Update as cores are added in Phases 1-4.
-    static let availableCores: Set<ConsoleType> = [.gb, .gbc]
+    static let availableCores: Set<ConsoleType> = [.gb, .gbc, .gba]
 
     /// File extensions for available cores only
     static var availableExtensions: Set<String> {
