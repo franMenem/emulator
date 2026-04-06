@@ -2,3 +2,5 @@ SameBoyCore/SameBoy/
 SameBoyCore/vendor/
 SameBoyCore/boot/
 .DS_Store
+MGBACore/mgba/
+MGBACore/mgba-build/
