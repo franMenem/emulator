@@ -70,13 +70,7 @@ final class InputManager {
             isRewindActive = pressed
         case .fastForward:
             isFastForwarding = pressed
-            if pressed {
-                emuThread?.setSpeed(4.0)
-                audioEngine?.setMuted(true)
-            } else {
-                emuThread?.setSpeed(currentSpeed)
-                audioEngine?.setMuted(currentSpeed != 1.0)
-            }
+            emuThread?.setSpeed(pressed ? 4.0 : currentSpeed)
         case .saveState:
             if pressed { onSaveState?() }
         case .loadState:
@@ -114,7 +108,6 @@ final class InputManager {
         // Round to nearest 5%
         currentSpeed = (speed * 20).rounded() / 20
         emuThread?.setSpeed(currentSpeed)
-        audioEngine?.setMuted(currentSpeed != 1.0)
         onSpeedChange?(currentSpeed)
     }
 

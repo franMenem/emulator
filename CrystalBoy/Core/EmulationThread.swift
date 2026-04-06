@@ -101,19 +101,15 @@ final class EmulationThread: @unchecked Sendable {
             if inputManager?.isRewindActive == true {
                 _ = emulator.rewindPop()
             } else {
-                let framesToRun = max(1, Int(speed))
-                for _ in 0..<framesToRun {
-                    emulator.runFrame()
-                }
+                emulator.runFrame()
             }
 
-            // Throttle to real-time (skip if fast forwarding)
-            if speed <= 1.0 {
-                let elapsed = CACurrentMediaTime() - frameStart
-                let sleepTime = targetFrameTime - elapsed
-                if sleepTime > 0 {
-                    Thread.sleep(forTimeInterval: sleepTime)
-                }
+            // Proportional throttle: scale sleep time by 1/speed
+            let adjustedFrameTime = targetFrameTime / Double(speed)
+            let elapsed = CACurrentMediaTime() - frameStart
+            let sleepTime = adjustedFrameTime - elapsed
+            if sleepTime > 0 {
+                Thread.sleep(forTimeInterval: sleepTime)
             }
         }
 

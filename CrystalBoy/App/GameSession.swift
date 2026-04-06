@@ -141,8 +141,6 @@ final class GameSession: ObservableObject {
         }
         toolbarState.onSpeedChanged = { [weak self] speed in
             thread.setSpeed(speed)
-            audio.setMuted(speed != 1.0)
-            // Sync InputManager speed index
             self?.inputManager?.setSpeedFromSlider(speed)
         }
 
