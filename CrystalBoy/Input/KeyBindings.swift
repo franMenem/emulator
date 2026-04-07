@@ -91,10 +91,10 @@ enum EmulatorAction: String, CaseIterable, Codable {
         case .buttonR: return UInt16(kVK_ANSI_S)
         case .buttonX: return UInt16(kVK_ANSI_D)
         case .buttonY: return UInt16(kVK_ANSI_C)
-        case .genesisC: return UInt16(kVK_ANSI_C)
-        case .genesisX: return UInt16(kVK_ANSI_D)
-        case .genesisY: return UInt16(kVK_ANSI_F)
-        case .genesisZ: return UInt16(kVK_ANSI_V)
+        case .genesisC: return UInt16(kVK_ANSI_F)
+        case .genesisX: return UInt16(kVK_ANSI_G)
+        case .genesisY: return UInt16(kVK_ANSI_V)
+        case .genesisZ: return UInt16(kVK_ANSI_B)
         case .volumeUp: return UInt16(kVK_ANSI_RightBracket)
         case .volumeDown: return UInt16(kVK_ANSI_LeftBracket)
         case .mute: return UInt16(kVK_ANSI_M)
@@ -179,10 +179,10 @@ enum EmulatorAction: String, CaseIterable, Codable {
         case .buttonR: return "S"
         case .buttonX: return "D"
         case .buttonY: return "C"
-        case .genesisC: return "C"
-        case .genesisX: return "D"
-        case .genesisY: return "F"
-        case .genesisZ: return "V"
+        case .genesisC: return "F"
+        case .genesisX: return "G"
+        case .genesisY: return "V"
+        case .genesisZ: return "B"
         case .volumeUp: return "]"
         case .volumeDown: return "["
         case .mute: return "M"

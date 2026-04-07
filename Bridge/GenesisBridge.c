@@ -321,18 +321,18 @@ bool genesis_load_battery(GenesisContext *ctx, const char *path) {
     return bytesRead == size;
 }
 
+static unsigned gen_cheat_index = 0;
+
 void genesis_add_cheat(GenesisContext *ctx, const char *code, const char *description) {
     if (!ctx || !ctx->romLoaded || !code) return;
-    (void)description; /* libretro cheat_set doesn't use a description label */
-
-    /* Use a simple incrementing index; cheat_reset clears all anyway */
-    static unsigned cheat_index = 0;
-    retro_cheat_set(cheat_index++, true, code);
+    (void)description;
+    retro_cheat_set(gen_cheat_index++, true, code);
 }
 
 void genesis_remove_all_cheats(GenesisContext *ctx) {
     if (!ctx || !ctx->romLoaded) return;
     retro_cheat_reset();
+    gen_cheat_index = 0;
 }
 
 void genesis_set_sample_rate(GenesisContext *ctx, uint32_t sampleRate) {

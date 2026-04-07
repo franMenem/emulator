@@ -323,18 +323,18 @@ bool snes9x_load_battery(Snes9xContext *ctx, const char *path) {
     return bytesRead == size;
 }
 
+static unsigned snes_cheat_index = 0;
+
 void snes9x_add_cheat(Snes9xContext *ctx, const char *code, const char *description) {
     if (!ctx || !ctx->romLoaded || !code) return;
-    (void)description; /* libretro cheat_set doesn't use a description label */
-
-    /* Use a simple incrementing index; cheat_reset clears all anyway */
-    static unsigned cheat_index = 0;
-    retro_cheat_set(cheat_index++, true, code);
+    (void)description;
+    retro_cheat_set(snes_cheat_index++, true, code);
 }
 
 void snes9x_remove_all_cheats(Snes9xContext *ctx) {
     if (!ctx || !ctx->romLoaded) return;
     retro_cheat_reset();
+    snes_cheat_index = 0;
 }
 
 void snes9x_set_sample_rate(Snes9xContext *ctx, uint32_t sampleRate) {

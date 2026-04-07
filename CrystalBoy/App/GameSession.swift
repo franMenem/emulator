@@ -54,12 +54,11 @@ final class GameSession: ObservableObject {
             audio?.pushSample(left: left, right: right)
         }
 
-        // Video
+        // Video — read width/height dynamically for cores that change resolution (e.g. SNES hi-res)
         let renderer = self.renderer
-        let width = emu.screenWidth
-        let height = emu.screenHeight
+        let emuRef = emu
         emu.setVideoCallback { pixels in
-            renderer.updateFrame(pixels: pixels, width: width, height: height)
+            renderer.updateFrame(pixels: pixels, width: emuRef.screenWidth, height: emuRef.screenHeight)
         }
 
         // Rewind
@@ -74,20 +73,26 @@ final class GameSession: ObservableObject {
             return
         }
 
-        // Emulation thread
-        let thread = EmulationThread(emulator: emu)
+        // Emulation thread — use correct FPS per console
+        let fps: Double
+        switch rom.consoleType {
+        case .gb, .gbc, .gba: fps = 59.7275
+        case .nes, .snes: fps = 60.0988
+        case .genesis: fps = 59.922
+        }
+        let thread = EmulationThread(emulator: emu, targetFPS: fps)
 
         // Input
         let input = InputManager(emulator: emu, emuThread: thread)
         input.audioEngine = audio
         thread.inputManager = input
 
-        // Saves
+        // Saves — setROM must be after loadROM so libretro cores have SRAM initialized
         let saves = SaveManager(emulator: emu, emuThread: thread)
-        saves.setROM(url: rom.url)
         saves.onToast = { msg in
             Task { @MainActor in appState.showToast(msg) }
         }
+        saves.setROM(url: rom.url)
 
         // Cheats
         let cheats = CheatManager(emulator: emu)

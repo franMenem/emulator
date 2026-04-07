@@ -321,18 +321,18 @@ bool nestopia_load_battery(NestopiaContext *ctx, const char *path) {
     return bytesRead == size;
 }
 
+static unsigned nes_cheat_index = 0;
+
 void nestopia_add_cheat(NestopiaContext *ctx, const char *code, const char *description) {
     if (!ctx || !ctx->romLoaded || !code) return;
-    (void)description; /* libretro cheat_set doesn't use a description label */
-
-    /* Use a simple incrementing index; cheat_reset clears all anyway */
-    static unsigned cheat_index = 0;
-    retro_cheat_set(cheat_index++, true, code);
+    (void)description;
+    retro_cheat_set(nes_cheat_index++, true, code);
 }
 
 void nestopia_remove_all_cheats(NestopiaContext *ctx) {
     if (!ctx || !ctx->romLoaded) return;
     retro_cheat_reset();
+    nes_cheat_index = 0;
 }
 
 void nestopia_set_sample_rate(NestopiaContext *ctx, uint32_t sampleRate) {

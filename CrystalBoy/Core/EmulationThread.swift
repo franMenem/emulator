@@ -33,8 +33,11 @@ final class EmulationThread: @unchecked Sendable {
         set { lock.withLock { _speedMultiplier = newValue } }
     }
 
-    init(emulator: EmulatorCore) {
+    private let targetFPS: Double
+
+    init(emulator: EmulatorCore, targetFPS: Double = 59.7275) {
         self.emulator = emulator
+        self.targetFPS = targetFPS
     }
 
     func start() {
@@ -86,7 +89,7 @@ final class EmulationThread: @unchecked Sendable {
     }
 
     private func runLoop() {
-        let targetFrameTime: TimeInterval = 1.0 / 59.7275 // GB frame rate
+        let targetFrameTime: TimeInterval = 1.0 / targetFPS
 
         while isRunning {
             if isPaused {
