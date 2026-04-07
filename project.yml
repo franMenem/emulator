@@ -36,6 +36,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.crystalboy.app
         PRODUCT_NAME: CrystalBoy
         INFOPLIST_GENERATION_MODE: GeneratedByXcode
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         SWIFT_OBJC_BRIDGING_HEADER: CrystalBoy/CrystalBoy-Bridging-Header.h
         HEADER_SEARCH_PATHS:
           - "$(SRCROOT)/SameBoyCore/include"
