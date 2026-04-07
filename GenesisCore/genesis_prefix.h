@@ -1,0 +1,30 @@
+#ifndef GENESIS_PREFIX_H
+#define GENESIS_PREFIX_H
+
+#define retro_init genesis_retro_init
+#define retro_deinit genesis_retro_deinit
+#define retro_api_version genesis_retro_api_version
+#define retro_get_system_info genesis_retro_get_system_info
+#define retro_get_system_av_info genesis_retro_get_system_av_info
+#define retro_set_environment genesis_retro_set_environment
+#define retro_set_video_refresh genesis_retro_set_video_refresh
+#define retro_set_audio_sample genesis_retro_set_audio_sample
+#define retro_set_audio_sample_batch genesis_retro_set_audio_sample_batch
+#define retro_set_input_poll genesis_retro_set_input_poll
+#define retro_set_input_state genesis_retro_set_input_state
+#define retro_set_controller_port_device genesis_retro_set_controller_port_device
+#define retro_reset genesis_retro_reset
+#define retro_run genesis_retro_run
+#define retro_serialize_size genesis_retro_serialize_size
+#define retro_serialize genesis_retro_serialize
+#define retro_unserialize genesis_retro_unserialize
+#define retro_cheat_reset genesis_retro_cheat_reset
+#define retro_cheat_set genesis_retro_cheat_set
+#define retro_load_game genesis_retro_load_game
+#define retro_load_game_special genesis_retro_load_game_special
+#define retro_unload_game genesis_retro_unload_game
+#define retro_get_region genesis_retro_get_region
+#define retro_get_memory_data genesis_retro_get_memory_data
+#define retro_get_memory_size genesis_retro_get_memory_size
+
+#endif
