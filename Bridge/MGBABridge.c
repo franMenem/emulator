@@ -1,6 +1,7 @@
 #include "MGBABridge.h"
 
 #include <mgba/core/core.h>
+#include <mgba/core/config.h>
 #include <mgba/core/blip_buf.h>
 #include <mgba/core/cheats.h>
 #include <mgba/core/serialize.h>
@@ -86,8 +87,16 @@ MGBAContext *mgba_create(void) {
 
     ctx->core->init(ctx->core);
 
+    // Initialize config — required before reset. Without this, core->reset
+    // dereferences uninitialized config hash tables (EXC_BAD_ACCESS).
+    mCoreInitConfig(ctx->core, NULL);
+
     // Set up video buffer
     ctx->core->setVideoBuffer(ctx->core, ctx->videoBuffer, GBA_WIDTH);
+
+    // Set audio buffer size — must happen before reset so the blip buffers
+    // are allocated at the right capacity.
+    ctx->core->setAudioBufferSize(ctx->core, AUDIO_SAMPLES);
 
     // Default sample rate
     ctx->sampleRate = 32768;
@@ -97,6 +106,7 @@ MGBAContext *mgba_create(void) {
 
 void mgba_destroy(MGBAContext *ctx) {
     if (!ctx) return;
+    mCoreConfigDeinit(&ctx->core->config);
     ctx->core->deinit(ctx->core);
     free(ctx);
 }
