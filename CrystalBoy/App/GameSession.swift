@@ -56,9 +56,12 @@ final class GameSession: ObservableObject {
 
         // Video — read width/height dynamically for cores that change resolution (e.g. SNES hi-res)
         let renderer = self.renderer
-        let emuRef = emu
-        emu.setVideoCallback { pixels in
-            renderer.updateFrame(pixels: pixels, width: emuRef.screenWidth, height: emuRef.screenHeight)
+        let defaultW = emu.screenWidth
+        let defaultH = emu.screenHeight
+        emu.setVideoCallback { [weak emu] pixels in
+            let w = emu?.screenWidth ?? defaultW
+            let h = emu?.screenHeight ?? defaultH
+            renderer.updateFrame(pixels: pixels, width: w, height: h)
         }
 
         // Rewind
