@@ -196,12 +196,14 @@ final class GameSession: ObservableObject {
         self.cheatManager = cheats
         self.manuallyPaused = false
 
-        // Keyboard monitors
+        // Keyboard monitors — skip when a text field is active (e.g., cheats input, settings)
         keyDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-            input.handleKeyDown(event: event) ? nil : event
+            if event.window?.firstResponder is NSTextView { return event }
+            return input.handleKeyDown(event: event) ? nil : event
         }
         keyUpMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyUp) { event in
-            input.handleKeyUp(event: event) ? nil : event
+            if event.window?.firstResponder is NSTextView { return event }
+            return input.handleKeyUp(event: event) ? nil : event
         }
 
         // Start
