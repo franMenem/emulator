@@ -16,26 +16,28 @@
 		574BD515765F2D758C7590F7 /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58662172C00ED511AEEFFA9A /* InputManager.swift */; };
 		6405EE8835824C396B0576BB /* CheatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EF0437E6D088E3EBA45164 /* CheatsView.swift */; };
 		671BE8249D6673AF28E8B30B /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1964EC2638778DCA24B70A0 /* GameView.swift */; };
+		81BBFB3488A111CC39D04DB7 /* genesis_compat.c in Sources */ = {isa = PBXBuildFile; fileRef = 2A9A674C29602D3CA3E0DE4F /* genesis_compat.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore -I$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include"; }; };
 		845DC417D6140BACCE10A192 /* CrystalBoyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */; };
 		8717441798175369FF9535C9 /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C844BCC9AC213AAC925FCA /* GameScreen.swift */; };
 		90B1A9658F640E3D4895BED8 /* ConsoleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03F207068E0070CCFAF518 /* ConsoleType.swift */; };
 		976BC30AB774FAF601CF7F2C /* GameToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407107575D00FB05EDF097C8 /* GameToolbar.swift */; };
-		9FDD379D33A46706ABBD0ADD /* MGBABridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 89EC97870866BF9FB8284A08 /* MGBABridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore"; }; };
+		9FDD379D33A46706ABBD0ADD /* MGBABridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 89EC97870866BF9FB8284A08 /* MGBABridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore -I$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include"; }; };
 		A7935238FF3920D8CD80B4E1 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3DD2196BB2C19E1F8CE976 /* LibraryView.swift */; };
 		B1EFC7C253D12208B49943B1 /* CheatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577785D2A870F9357F45AFF /* CheatManager.swift */; };
 		C6E91644D211735F455174C8 /* MGBAEmulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CB160956FDF6164F25B8E7 /* MGBAEmulator.swift */; };
-		D5E89F0377FE7B10B2047240 /* NestopiaBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 56D4BA50CAD617F5219A36B0 /* NestopiaBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore"; }; };
-		D816CAA52B569FF162C0735D /* Snes9xBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 83674B7034222ABB1A5CC8FC /* Snes9xBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore"; }; };
+		D5E89F0377FE7B10B2047240 /* NestopiaBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 56D4BA50CAD617F5219A36B0 /* NestopiaBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore -I$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include"; }; };
+		D816CAA52B569FF162C0735D /* Snes9xBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 83674B7034222ABB1A5CC8FC /* Snes9xBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore -I$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include"; }; };
 		E0D04DBFAFE924D474073376 /* NestopiaEmulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6927468E59249E18C95A16D /* NestopiaEmulator.swift */; };
 		E23A7BA68C88FDA190C84304 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0D2E0F1F5BB89729BAFB2F /* AppState.swift */; };
+		E38A73747C20597AD7F822A2 /* genesis_stubs.c in Sources */ = {isa = PBXBuildFile; fileRef = B4FB22AFFBA1D7EB5049504B /* genesis_stubs.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore -I$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include"; }; };
 		E42F87F5D70E42AA3EEA5649 /* LibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8CAB6AA05BBCBD8D6803CE /* LibraryManager.swift */; };
 		E7452DCA0A3675993E647FFE /* EmulatorCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20171E61B9ED169F56792B98 /* EmulatorCore.swift */; };
 		E7EE6FA968DE776B28C2D8CE /* EmulationThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66F5A27EF6E1638BA203EAF /* EmulationThread.swift */; };
 		E8AA6DF646E16177C369F2C6 /* ControlsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65E8FBFBBDC07F16F71F2E3 /* ControlsSettingsView.swift */; };
-		F5383A22888DD6FCC111B195 /* GenesisBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DDBB6154AC7297D3B6F11E9 /* GenesisBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore"; }; };
+		F5383A22888DD6FCC111B195 /* GenesisBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DDBB6154AC7297D3B6F11E9 /* GenesisBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore -I$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include"; }; };
 		FA3368F3940F1C1DF1468DD8 /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411310A53442CACAF6D6D87E /* GameSession.swift */; };
 		FD0D0B1041655E6E4247ADC5 /* Snes9xEmulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4A1DD409AB913C8BFA454D /* Snes9xEmulator.swift */; };
-		FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore"; }; };
+		FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore -I$(SRCROOT)/Snes9xCore/include -I$(SRCROOT)/Snes9xCore -I$(SRCROOT)/GenesisCore/include -I$(SRCROOT)/GenesisCore -I$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,7 @@
 		0C4A1DD409AB913C8BFA454D /* Snes9xEmulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snes9xEmulator.swift; sourceTree = "<group>"; };
 		15CB160956FDF6164F25B8E7 /* MGBAEmulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MGBAEmulator.swift; sourceTree = "<group>"; };
 		20171E61B9ED169F56792B98 /* EmulatorCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorCore.swift; sourceTree = "<group>"; };
+		2A9A674C29602D3CA3E0DE4F /* genesis_compat.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = genesis_compat.c; sourceTree = "<group>"; };
 		2F03F207068E0070CCFAF518 /* ConsoleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleType.swift; sourceTree = "<group>"; };
 		37C844BCC9AC213AAC925FCA /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
 		3A8C71CCEE4BCDCD67396C6F /* Snes9xBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Snes9xBridge.h; sourceTree = "<group>"; };
@@ -68,6 +71,7 @@
 		AE1CB11B3F48D470E86F2F0F /* NestopiaBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NestopiaBridge.h; sourceTree = "<group>"; };
 		AEEE8FCD6954599C522016AE /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalBoyApp.swift; sourceTree = "<group>"; };
+		B4FB22AFFBA1D7EB5049504B /* genesis_stubs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = genesis_stubs.c; sourceTree = "<group>"; };
 		C0A2207E0AC9626CD10669B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C65E8FBFBBDC07F16F71F2E3 /* ControlsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsSettingsView.swift; sourceTree = "<group>"; };
 		D6927468E59249E18C95A16D /* NestopiaEmulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestopiaEmulator.swift; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 		326D09C51EB6C370B228447E /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
+				2A9A674C29602D3CA3E0DE4F /* genesis_compat.c */,
+				B4FB22AFFBA1D7EB5049504B /* genesis_stubs.c */,
 				9DDBB6154AC7297D3B6F11E9 /* GenesisBridge.c */,
 				A4C44A0009AC778CDC82E22C /* GenesisBridge.h */,
 				89EC97870866BF9FB8284A08 /* MGBABridge.c */,
@@ -329,6 +335,8 @@
 				45985EB7697426232BC92315 /* SaveManager.swift in Sources */,
 				D816CAA52B569FF162C0735D /* Snes9xBridge.c in Sources */,
 				FD0D0B1041655E6E4247ADC5 /* Snes9xEmulator.swift in Sources */,
+				81BBFB3488A111CC39D04DB7 /* genesis_compat.c in Sources */,
+				E38A73747C20597AD7F822A2 /* genesis_stubs.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +383,7 @@
 					"-lnestopia",
 					"-lsnes9x",
 					"-lgenesis",
+					"-lz",
 					"-lm",
 					"-lc++",
 				);
@@ -426,6 +435,7 @@
 					"-lnestopia",
 					"-lsnes9x",
 					"-lgenesis",
+					"-lz",
 					"-lm",
 					"-lc++",
 				);

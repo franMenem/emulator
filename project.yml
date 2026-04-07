@@ -30,6 +30,7 @@ targets:
           - "-I$(SRCROOT)/Snes9xCore"
           - "-I$(SRCROOT)/GenesisCore/include"
           - "-I$(SRCROOT)/GenesisCore"
+          - "-I$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.crystalboy.app
@@ -58,6 +59,7 @@ targets:
           - "-lnestopia"
           - "-lsnes9x"
           - "-lgenesis"
+          - "-lz"
           - "-lm"
           - "-lc++"
         SWIFT_STRICT_CONCURRENCY: targeted
