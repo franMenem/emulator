@@ -1,0 +1,30 @@
+#ifndef NES_PREFIX_H
+#define NES_PREFIX_H
+
+#define retro_init nes_retro_init
+#define retro_deinit nes_retro_deinit
+#define retro_api_version nes_retro_api_version
+#define retro_get_system_info nes_retro_get_system_info
+#define retro_get_system_av_info nes_retro_get_system_av_info
+#define retro_set_environment nes_retro_set_environment
+#define retro_set_video_refresh nes_retro_set_video_refresh
+#define retro_set_audio_sample nes_retro_set_audio_sample
+#define retro_set_audio_sample_batch nes_retro_set_audio_sample_batch
+#define retro_set_input_poll nes_retro_set_input_poll
+#define retro_set_input_state nes_retro_set_input_state
+#define retro_set_controller_port_device nes_retro_set_controller_port_device
+#define retro_reset nes_retro_reset
+#define retro_run nes_retro_run
+#define retro_serialize_size nes_retro_serialize_size
+#define retro_serialize nes_retro_serialize
+#define retro_unserialize nes_retro_unserialize
+#define retro_cheat_reset nes_retro_cheat_reset
+#define retro_cheat_set nes_retro_cheat_set
+#define retro_load_game nes_retro_load_game
+#define retro_load_game_special nes_retro_load_game_special
+#define retro_unload_game nes_retro_unload_game
+#define retro_get_region nes_retro_get_region
+#define retro_get_memory_data nes_retro_get_memory_data
+#define retro_get_memory_size nes_retro_get_memory_size
+
+#endif
