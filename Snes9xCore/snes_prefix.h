@@ -1,0 +1,30 @@
+#ifndef SNES_PREFIX_H
+#define SNES_PREFIX_H
+
+#define retro_init snes_retro_init
+#define retro_deinit snes_retro_deinit
+#define retro_api_version snes_retro_api_version
+#define retro_get_system_info snes_retro_get_system_info
+#define retro_get_system_av_info snes_retro_get_system_av_info
+#define retro_set_environment snes_retro_set_environment
+#define retro_set_video_refresh snes_retro_set_video_refresh
+#define retro_set_audio_sample snes_retro_set_audio_sample
+#define retro_set_audio_sample_batch snes_retro_set_audio_sample_batch
+#define retro_set_input_poll snes_retro_set_input_poll
+#define retro_set_input_state snes_retro_set_input_state
+#define retro_set_controller_port_device snes_retro_set_controller_port_device
+#define retro_reset snes_retro_reset
+#define retro_run snes_retro_run
+#define retro_serialize_size snes_retro_serialize_size
+#define retro_serialize snes_retro_serialize
+#define retro_unserialize snes_retro_unserialize
+#define retro_cheat_reset snes_retro_cheat_reset
+#define retro_cheat_set snes_retro_cheat_set
+#define retro_load_game snes_retro_load_game
+#define retro_load_game_special snes_retro_load_game_special
+#define retro_unload_game snes_retro_unload_game
+#define retro_get_region snes_retro_get_region
+#define retro_get_memory_data snes_retro_get_memory_data
+#define retro_get_memory_size snes_retro_get_memory_size
+
+#endif
