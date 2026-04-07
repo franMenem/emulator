@@ -18,7 +18,7 @@
 
 /* Genesis screen dimensions */
 #define GENESIS_WIDTH  320
-#define GENESIS_HEIGHT 224
+#define GENESIS_HEIGHT 240  /* PAL max; NTSC is 224 — use max to avoid overflow */
 
 /* ---------- Context -------------------------------------------------------- */
 
