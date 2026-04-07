@@ -26,6 +26,10 @@ targets:
           - "-I$(SRCROOT)/MGBACore/include"
           - "-I$(SRCROOT)/NestopiaCore/include"
           - "-I$(SRCROOT)/NestopiaCore"
+          - "-I$(SRCROOT)/Snes9xCore/include"
+          - "-I$(SRCROOT)/Snes9xCore"
+          - "-I$(SRCROOT)/GenesisCore/include"
+          - "-I$(SRCROOT)/GenesisCore"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.crystalboy.app
@@ -37,15 +41,23 @@ targets:
           - "$(SRCROOT)/MGBACore/include"
           - "$(SRCROOT)/NestopiaCore/include"
           - "$(SRCROOT)/NestopiaCore"
+          - "$(SRCROOT)/Snes9xCore/include"
+          - "$(SRCROOT)/Snes9xCore"
+          - "$(SRCROOT)/GenesisCore/include"
+          - "$(SRCROOT)/GenesisCore"
           - "$(SRCROOT)/Bridge"
         LIBRARY_SEARCH_PATHS:
           - "$(SRCROOT)/SameBoyCore"
           - "$(SRCROOT)/MGBACore"
           - "$(SRCROOT)/NestopiaCore"
+          - "$(SRCROOT)/Snes9xCore"
+          - "$(SRCROOT)/GenesisCore"
         OTHER_LDFLAGS:
           - "-lsameboy"
           - "-lmgba"
           - "-lnestopia"
+          - "-lsnes9x"
+          - "-lgenesis"
           - "-lm"
           - "-lc++"
         SWIFT_STRICT_CONCURRENCY: targeted

@@ -1,3 +1,5 @@
 #import "../Bridge/SameBoyBridge.h"
 #import "../Bridge/MGBABridge.h"
 #import "../Bridge/NestopiaBridge.h"
+#import "../Bridge/Snes9xBridge.h"
+#import "../Bridge/GenesisBridge.h"

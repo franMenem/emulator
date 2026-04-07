@@ -41,7 +41,13 @@ final class GameSession: ObservableObject {
 
         // Audio
         let audio = AudioEngine()
-        let audioRate: Double = rom.consoleType == .gba ? 32768 : 48000
+        let audioRate: Double
+        switch rom.consoleType {
+        case .gba: audioRate = 32768
+        case .snes: audioRate = 32040
+        case .genesis: audioRate = 44100
+        default: audioRate = 48000
+        }
         audio.start(sampleRate: audioRate)
         emu.setSampleRate(audio.currentSampleRate)
         emu.setAudioCallback { [weak audio] left, right in
@@ -234,8 +240,10 @@ final class GameSession: ObservableObject {
             return MGBAEmulator()
         case .nes:
             return NestopiaEmulator()
-        case .snes, .genesis:
-            return nil
+        case .snes:
+            return Snes9xEmulator()
+        case .genesis:
+            return GenesisEmulator()
         }
     }
 
