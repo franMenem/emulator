@@ -264,14 +264,18 @@ final class GameSession: ObservableObject {
             forName: NSApplication.didResignActiveNotification,
             object: nil, queue: .main
         ) { [weak self] _ in
-            self?.emuThread?.pause()
+            MainActor.assumeIsolated {
+                self?.emuThread?.pause()
+            }
         }
         activeObserver = NotificationCenter.default.addObserver(
             forName: NSApplication.didBecomeActiveNotification,
             object: nil, queue: .main
         ) { [weak self] _ in
-            guard let self, !self.manuallyPaused else { return }
-            self.emuThread?.resume()
+            MainActor.assumeIsolated {
+                guard let self, !self.manuallyPaused else { return }
+                self.emuThread?.resume()
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ struct ROMItem: Identifiable {
     var isColor: Bool { consoleType == .gbc }
 }
 
+@MainActor
 final class LibraryManager: ObservableObject {
     @Published var roms: [ROMItem] = []
     @Published var folderURL: URL?
@@ -42,8 +43,8 @@ final class LibraryManager: ObservableObject {
         }
     }
 
-    deinit {
-        accessedURL?.stopAccessingSecurityScopedResource()
+    nonisolated deinit {
+        // accessedURL cleanup is best-effort; the security scope will be released on process exit.
     }
 
     func selectFolder() {

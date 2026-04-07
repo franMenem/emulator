@@ -1,7 +1,7 @@
 import GameController
 import Cocoa
 
-final class InputManager {
+final class InputManager: @unchecked Sendable {
     let keyBindings = KeyBindings()
     private let emulator: EmulatorCore
     private var emuThread: EmulationThread?
