@@ -63,6 +63,7 @@
 		83674B7034222ABB1A5CC8FC /* Snes9xBridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Snes9xBridge.c; sourceTree = "<group>"; };
 		8577785D2A870F9357F45AFF /* CheatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatManager.swift; sourceTree = "<group>"; };
 		89EC97870866BF9FB8284A08 /* MGBABridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MGBABridge.c; sourceTree = "<group>"; };
+		9DA527BC8AC845F9457FC475 /* .clangd */ = {isa = PBXFileReference; path = .clangd; sourceTree = "<group>"; };
 		9DDBB6154AC7297D3B6F11E9 /* GenesisBridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GenesisBridge.c; sourceTree = "<group>"; };
 		9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SameBoyBridge.c; sourceTree = "<group>"; };
 		A1FC3F1FCAA610F2A7766F21 /* KeyBindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindings.swift; sourceTree = "<group>"; };
@@ -143,6 +144,7 @@
 		326D09C51EB6C370B228447E /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
+				9DA527BC8AC845F9457FC475 /* .clangd */,
 				2A9A674C29602D3CA3E0DE4F /* genesis_compat.c */,
 				B4FB22AFFBA1D7EB5049504B /* genesis_stubs.c */,
 				9DDBB6154AC7297D3B6F11E9 /* GenesisBridge.c */,
@@ -363,6 +365,7 @@
 					"$(SRCROOT)/Snes9xCore",
 					"$(SRCROOT)/GenesisCore/include",
 					"$(SRCROOT)/GenesisCore",
+					"$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include",
 					"$(SRCROOT)/Bridge",
 				);
 				INFOPLIST_GENERATION_MODE = GeneratedByXcode;
@@ -416,6 +419,7 @@
 					"$(SRCROOT)/Snes9xCore",
 					"$(SRCROOT)/GenesisCore/include",
 					"$(SRCROOT)/GenesisCore",
+					"$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include",
 					"$(SRCROOT)/Bridge",
 				);
 				INFOPLIST_GENERATION_MODE = GeneratedByXcode;

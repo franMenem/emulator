@@ -47,6 +47,7 @@ targets:
           - "$(SRCROOT)/Snes9xCore"
           - "$(SRCROOT)/GenesisCore/include"
           - "$(SRCROOT)/GenesisCore"
+          - "$(SRCROOT)/GenesisCore/Genesis-Plus-GX/libretro/libretro-common/include"
           - "$(SRCROOT)/Bridge"
         LIBRARY_SEARCH_PATHS:
           - "$(SRCROOT)/SameBoyCore"
