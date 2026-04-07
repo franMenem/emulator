@@ -5,6 +5,7 @@ final class InputManager {
     let keyBindings = KeyBindings()
     private let emulator: EmulatorCore
     private var emuThread: EmulationThread?
+    private let consoleType: ConsoleType
 
     // Callbacks for emulator-level actions
     var onSaveState: (() -> Void)?
@@ -29,9 +30,10 @@ final class InputManager {
 
     private var controllerObserver: NSObjectProtocol?
 
-    init(emulator: EmulatorCore, emuThread: EmulationThread?) {
+    init(emulator: EmulatorCore, emuThread: EmulationThread?, consoleType: ConsoleType = .gb) {
         self.emulator = emulator
         self.emuThread = emuThread
+        self.consoleType = consoleType
         setupGamepad()
     }
 
@@ -158,6 +160,7 @@ final class InputManager {
     private func configureGamepad(_ controller: GCController) {
         guard let gamepad = controller.extendedGamepad else { return }
 
+        // D-pad — same for all consoles
         gamepad.dpad.up.pressedChangedHandler = { [weak self] _, _, pressed in
             self?.emulator.setInput(button: .up, pressed: pressed)
         }
@@ -170,32 +173,102 @@ final class InputManager {
         gamepad.dpad.right.pressedChangedHandler = { [weak self] _, _, pressed in
             self?.emulator.setInput(button: .right, pressed: pressed)
         }
-        gamepad.buttonA.pressedChangedHandler = { [weak self] _, _, pressed in
-            self?.emulator.setInput(button: .a, pressed: pressed)
-        }
-        gamepad.buttonB.pressedChangedHandler = { [weak self] _, _, pressed in
-            self?.emulator.setInput(button: .b, pressed: pressed)
-        }
+
+        // Start/Select — same for all consoles
         gamepad.buttonMenu.pressedChangedHandler = { [weak self] _, _, pressed in
             self?.emulator.setInput(button: .start, pressed: pressed)
         }
         gamepad.buttonOptions?.pressedChangedHandler = { [weak self] _, _, pressed in
             self?.emulator.setInput(button: .select, pressed: pressed)
         }
-        gamepad.leftShoulder.pressedChangedHandler = { [weak self] _, _, pressed in
-            self?.performAction(.rewind, pressed: pressed)
-        }
-        gamepad.rightShoulder.pressedChangedHandler = { [weak self] _, _, pressed in
-            self?.performAction(.fastForward, pressed: pressed)
-        }
+
+        // L2/R2 — save/load state for all consoles
         gamepad.leftTrigger.pressedChangedHandler = { [weak self] _, _, pressed in
             if pressed { self?.onSaveState?() }
         }
         gamepad.rightTrigger.pressedChangedHandler = { [weak self] _, _, pressed in
             if pressed { self?.onLoadState?() }
         }
-        gamepad.buttonY.pressedChangedHandler = { [weak self] _, _, pressed in
-            if pressed { self?.onToggleCheats?() }
+
+        // Per-console face buttons and shoulders
+        switch consoleType {
+        case .gb, .gbc, .nes:
+            // A/B on face buttons, L1=rewind, R1=FF, Y=cheats
+            gamepad.buttonA.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .a, pressed: pressed)
+            }
+            gamepad.buttonB.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .b, pressed: pressed)
+            }
+            gamepad.leftShoulder.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.performAction(.rewind, pressed: pressed)
+            }
+            gamepad.rightShoulder.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.performAction(.fastForward, pressed: pressed)
+            }
+            gamepad.buttonY.pressedChangedHandler = { [weak self] _, _, pressed in
+                if pressed { self?.onToggleCheats?() }
+            }
+
+        case .gba:
+            // A/B on face buttons, L1=L, R1=R, Y=cheats
+            gamepad.buttonA.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .a, pressed: pressed)
+            }
+            gamepad.buttonB.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .b, pressed: pressed)
+            }
+            gamepad.leftShoulder.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .l, pressed: pressed)
+            }
+            gamepad.rightShoulder.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .r, pressed: pressed)
+            }
+            gamepad.buttonY.pressedChangedHandler = { [weak self] _, _, pressed in
+                if pressed { self?.onToggleCheats?() }
+            }
+
+        case .snes:
+            // Full SNES layout: A/B/X/Y on face, L1=L, R1=R
+            gamepad.buttonA.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .a, pressed: pressed)
+            }
+            gamepad.buttonB.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .b, pressed: pressed)
+            }
+            gamepad.buttonX.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .x, pressed: pressed)
+            }
+            gamepad.buttonY.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .y, pressed: pressed)
+            }
+            gamepad.leftShoulder.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .l, pressed: pressed)
+            }
+            gamepad.rightShoulder.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .r, pressed: pressed)
+            }
+
+        case .genesis:
+            // Genesis 6-button: B(pad)=B, A(pad)=C, Y(pad)=A, X(pad)=X, L1=Y, R1=Z
+            gamepad.buttonB.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .b, pressed: pressed)
+            }
+            gamepad.buttonA.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .genesisC, pressed: pressed)
+            }
+            gamepad.buttonY.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .a, pressed: pressed)
+            }
+            gamepad.buttonX.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .genesisX, pressed: pressed)
+            }
+            gamepad.leftShoulder.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .genesisY, pressed: pressed)
+            }
+            gamepad.rightShoulder.pressedChangedHandler = { [weak self] _, _, pressed in
+                self?.emulator.setInput(button: .genesisZ, pressed: pressed)
+            }
         }
     }
 }

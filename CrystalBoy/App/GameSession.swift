@@ -86,7 +86,7 @@ final class GameSession: ObservableObject {
         let thread = EmulationThread(emulator: emu, targetFPS: fps)
 
         // Input
-        let input = InputManager(emulator: emu, emuThread: thread)
+        let input = InputManager(emulator: emu, emuThread: thread, consoleType: rom.consoleType)
         input.audioEngine = audio
         thread.inputManager = input
 
