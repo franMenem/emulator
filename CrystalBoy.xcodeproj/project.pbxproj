@@ -19,17 +19,19 @@
 		8717441798175369FF9535C9 /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C844BCC9AC213AAC925FCA /* GameScreen.swift */; };
 		90B1A9658F640E3D4895BED8 /* ConsoleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03F207068E0070CCFAF518 /* ConsoleType.swift */; };
 		976BC30AB774FAF601CF7F2C /* GameToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407107575D00FB05EDF097C8 /* GameToolbar.swift */; };
-		9FDD379D33A46706ABBD0ADD /* MGBABridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 89EC97870866BF9FB8284A08 /* MGBABridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include"; }; };
+		9FDD379D33A46706ABBD0ADD /* MGBABridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 89EC97870866BF9FB8284A08 /* MGBABridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore"; }; };
 		A7935238FF3920D8CD80B4E1 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3DD2196BB2C19E1F8CE976 /* LibraryView.swift */; };
 		B1EFC7C253D12208B49943B1 /* CheatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577785D2A870F9357F45AFF /* CheatManager.swift */; };
 		C6E91644D211735F455174C8 /* MGBAEmulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CB160956FDF6164F25B8E7 /* MGBAEmulator.swift */; };
+		D5E89F0377FE7B10B2047240 /* NestopiaBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 56D4BA50CAD617F5219A36B0 /* NestopiaBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore"; }; };
+		E0D04DBFAFE924D474073376 /* NestopiaEmulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6927468E59249E18C95A16D /* NestopiaEmulator.swift */; };
 		E23A7BA68C88FDA190C84304 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0D2E0F1F5BB89729BAFB2F /* AppState.swift */; };
 		E42F87F5D70E42AA3EEA5649 /* LibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8CAB6AA05BBCBD8D6803CE /* LibraryManager.swift */; };
 		E7452DCA0A3675993E647FFE /* EmulatorCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20171E61B9ED169F56792B98 /* EmulatorCore.swift */; };
 		E7EE6FA968DE776B28C2D8CE /* EmulationThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66F5A27EF6E1638BA203EAF /* EmulationThread.swift */; };
 		E8AA6DF646E16177C369F2C6 /* ControlsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65E8FBFBBDC07F16F71F2E3 /* ControlsSettingsView.swift */; };
 		FA3368F3940F1C1DF1468DD8 /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411310A53442CACAF6D6D87E /* GameSession.swift */; };
-		FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include"; }; };
+		FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */; settings = {COMPILER_FLAGS = "-I$(SRCROOT)/SameBoyCore/include -I$(SRCROOT)/MGBACore/include -I$(SRCROOT)/NestopiaCore/include -I$(SRCROOT)/NestopiaCore"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,7 @@
 		411310A53442CACAF6D6D87E /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
 		4574F9731B1C6873EEA9291F /* SaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveManager.swift; sourceTree = "<group>"; };
 		45E9045303ABC112AC5035F7 /* SameBoyEmulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SameBoyEmulator.swift; sourceTree = "<group>"; };
+		56D4BA50CAD617F5219A36B0 /* NestopiaBridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = NestopiaBridge.c; sourceTree = "<group>"; };
 		58662172C00ED511AEEFFA9A /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputManager.swift; sourceTree = "<group>"; };
 		66223129D3D9E208E5A069CA /* CrystalBoy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CrystalBoy.entitlements; sourceTree = "<group>"; };
 		7E6B69F736882F928812EAEA /* CrystalBoy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrystalBoy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,10 +55,12 @@
 		9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SameBoyBridge.c; sourceTree = "<group>"; };
 		A1FC3F1FCAA610F2A7766F21 /* KeyBindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindings.swift; sourceTree = "<group>"; };
 		A689816221F264BD33821B40 /* CrystalBoy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CrystalBoy-Bridging-Header.h"; sourceTree = "<group>"; };
+		AE1CB11B3F48D470E86F2F0F /* NestopiaBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NestopiaBridge.h; sourceTree = "<group>"; };
 		AEEE8FCD6954599C522016AE /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		B48767D2157F36D7337E9984 /* CrystalBoyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalBoyApp.swift; sourceTree = "<group>"; };
 		C0A2207E0AC9626CD10669B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C65E8FBFBBDC07F16F71F2E3 /* ControlsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsSettingsView.swift; sourceTree = "<group>"; };
+		D6927468E59249E18C95A16D /* NestopiaEmulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestopiaEmulator.swift; sourceTree = "<group>"; };
 		DC0D2E0F1F5BB89729BAFB2F /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		DC792E4F69A79CF3C61B5405 /* MGBABridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGBABridge.h; sourceTree = "<group>"; };
 		E1964EC2638778DCA24B70A0 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -113,6 +118,7 @@
 				E66F5A27EF6E1638BA203EAF /* EmulationThread.swift */,
 				20171E61B9ED169F56792B98 /* EmulatorCore.swift */,
 				15CB160956FDF6164F25B8E7 /* MGBAEmulator.swift */,
+				D6927468E59249E18C95A16D /* NestopiaEmulator.swift */,
 				45E9045303ABC112AC5035F7 /* SameBoyEmulator.swift */,
 			);
 			path = Core;
@@ -123,6 +129,8 @@
 			children = (
 				89EC97870866BF9FB8284A08 /* MGBABridge.c */,
 				DC792E4F69A79CF3C61B5405 /* MGBABridge.h */,
+				56D4BA50CAD617F5219A36B0 /* NestopiaBridge.c */,
+				AE1CB11B3F48D470E86F2F0F /* NestopiaBridge.h */,
 				9DF6E96F4AFC6048ED7BE95B /* SameBoyBridge.c */,
 				7FE12140C4D9CC1EA0330581 /* SameBoyBridge.h */,
 			);
@@ -296,6 +304,8 @@
 				A7935238FF3920D8CD80B4E1 /* LibraryView.swift in Sources */,
 				9FDD379D33A46706ABBD0ADD /* MGBABridge.c in Sources */,
 				C6E91644D211735F455174C8 /* MGBAEmulator.swift in Sources */,
+				D5E89F0377FE7B10B2047240 /* NestopiaBridge.c in Sources */,
+				E0D04DBFAFE924D474073376 /* NestopiaEmulator.swift in Sources */,
 				FDCA3886C02E062C01CEBB54 /* SameBoyBridge.c in Sources */,
 				37E02A8CA8DC8705C128E365 /* SameBoyEmulator.swift in Sources */,
 				45985EB7697426232BC92315 /* SaveManager.swift in Sources */,
@@ -319,6 +329,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/SameBoyCore/include",
 					"$(SRCROOT)/MGBACore/include",
+					"$(SRCROOT)/NestopiaCore/include",
+					"$(SRCROOT)/NestopiaCore",
 					"$(SRCROOT)/Bridge",
 				);
 				INFOPLIST_GENERATION_MODE = GeneratedByXcode;
@@ -329,11 +341,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/SameBoyCore",
 					"$(SRCROOT)/MGBACore",
+					"$(SRCROOT)/NestopiaCore",
 				);
 				OTHER_LDFLAGS = (
 					"-lsameboy",
 					"-lmgba",
+					"-lnestopia",
 					"-lm",
+					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crystalboy.app;
 				PRODUCT_NAME = CrystalBoy;
@@ -357,6 +372,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/SameBoyCore/include",
 					"$(SRCROOT)/MGBACore/include",
+					"$(SRCROOT)/NestopiaCore/include",
+					"$(SRCROOT)/NestopiaCore",
 					"$(SRCROOT)/Bridge",
 				);
 				INFOPLIST_GENERATION_MODE = GeneratedByXcode;
@@ -367,11 +384,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/SameBoyCore",
 					"$(SRCROOT)/MGBACore",
+					"$(SRCROOT)/NestopiaCore",
 				);
 				OTHER_LDFLAGS = (
 					"-lsameboy",
 					"-lmgba",
+					"-lnestopia",
 					"-lm",
+					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crystalboy.app;
 				PRODUCT_NAME = CrystalBoy;

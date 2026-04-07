@@ -24,6 +24,8 @@ targets:
         compilerFlags:
           - "-I$(SRCROOT)/SameBoyCore/include"
           - "-I$(SRCROOT)/MGBACore/include"
+          - "-I$(SRCROOT)/NestopiaCore/include"
+          - "-I$(SRCROOT)/NestopiaCore"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.crystalboy.app
@@ -33,14 +35,19 @@ targets:
         HEADER_SEARCH_PATHS:
           - "$(SRCROOT)/SameBoyCore/include"
           - "$(SRCROOT)/MGBACore/include"
+          - "$(SRCROOT)/NestopiaCore/include"
+          - "$(SRCROOT)/NestopiaCore"
           - "$(SRCROOT)/Bridge"
         LIBRARY_SEARCH_PATHS:
           - "$(SRCROOT)/SameBoyCore"
           - "$(SRCROOT)/MGBACore"
+          - "$(SRCROOT)/NestopiaCore"
         OTHER_LDFLAGS:
           - "-lsameboy"
           - "-lmgba"
+          - "-lnestopia"
           - "-lm"
+          - "-lc++"
         SWIFT_STRICT_CONCURRENCY: targeted
         ENABLE_USER_SCRIPT_SANDBOXING: false
         CODE_SIGN_IDENTITY: "-"

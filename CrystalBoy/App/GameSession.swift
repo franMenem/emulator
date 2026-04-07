@@ -232,7 +232,9 @@ final class GameSession: ObservableObject {
             return SameBoyEmulator(isColorGB: rom.consoleType == .gbc)
         case .gba:
             return MGBAEmulator()
-        case .nes, .snes, .genesis:
+        case .nes:
+            return NestopiaEmulator()
+        case .snes, .genesis:
             return nil
         }
     }
