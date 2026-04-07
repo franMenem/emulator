@@ -115,7 +115,8 @@ void mgba_set_audio_callback(MGBAContext *ctx, MGBAAudioCallback callback) {
 
 bool mgba_load_rom(MGBAContext *ctx, const char *path) {
     if (!mCoreLoadFile(ctx->core, path)) return false;
-    mCoreAutoloadSave(ctx->core);
+    // Don't call mCoreAutoloadSave — it crashes without a configured save directory.
+    // Battery saves are handled by SaveManager via mgba_load_battery/mgba_save_battery.
     ctx->core->reset(ctx->core);
     return true;
 }
