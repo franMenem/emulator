@@ -386,6 +386,7 @@
 					"-lz",
 					"-lm",
 					"-lc++",
+					"-Wl,-no_warn_duplicate_libraries",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crystalboy.app;
 				PRODUCT_NAME = CrystalBoy;
@@ -438,6 +439,7 @@
 					"-lz",
 					"-lm",
 					"-lc++",
+					"-Wl,-no_warn_duplicate_libraries",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crystalboy.app;
 				PRODUCT_NAME = CrystalBoy;
